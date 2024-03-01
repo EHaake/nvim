@@ -1,3 +1,3 @@
-# Erik's NeoVim config
+# Erik's Neovim config
 
-...more to come
+...more to come, stay tuned :)
