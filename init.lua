@@ -28,4 +28,4 @@ local opts = {}
 require("lazy").setup(plugins, opts)
 
 require("catppuccin").setup()
-vim.comd.colorscheme = "catppuccin"
+vim.cmd.colorscheme "catppuccin"
