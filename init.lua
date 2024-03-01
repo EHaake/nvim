@@ -18,28 +18,10 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim" if not vim.loop.fs_
     lazypath, }) end
 vim.opt.rtp:prepend(lazypath)
 
--- List of plugins to install with lazy
-local plugins = {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-	{
-    'nvim-telescope/telescope.nvim', tag = '0.1.5',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-	},
-	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons", 
-			"MunifTanjim/nui.nvim",
-		}
-	}
-}
-
-local opts = {}
-
-require("lazy").setup(plugins, opts)
+--
+-- Load our plugins
+require("lazy").setup("plugins")
+--
 
 -- Telescope setup
 local builtin = require("telescope.builtin")
@@ -54,6 +36,7 @@ config.setup({
   indent = { enable = true },
 })
 
+-- Neotree setup
+vim.keymap.set('n', '<C-n>', ':Neotree toggle <CR>')
+
 -- colorscheme
-require("catppuccin").setup()
-vim.cmd.colorscheme "catppuccin"
