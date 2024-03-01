@@ -1,16 +1,15 @@
--- basic configuration stuff
-vim.cmd("set expandtab") 
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
+vim.opt.scrolloff = 8  -- always have at least 8 line between cursor and end of buffer
+vim.g.mapleader = " "
 
 -- basic keymap stuff
 vim.keymap.set('i', 'jk', '<Esc>') -- exit insert mode with 'jk'
 
 
 -- get lazy.nvim loaded
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim" if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({ "git",
     "clone",
     "--filter=blob:none",
@@ -27,8 +26,8 @@ local plugins = {
      {
     'nvim-telescope/telescope.nvim', tag = '0.1.5',
       dependencies = { 'nvim-lua/plenary.nvim' }
-    }
-
+    },
+    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
 }
 
 local opts = {}
@@ -38,6 +37,16 @@ require("lazy").setup(plugins, opts)
 -- Telescope setup
 local builtin = require("telescope.builtin")
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 
+-- Treesitter setup
+local config = require("nvim-treesitter.configs")
+config.setup({
+  ensure_installed = {"lua", "javascript", "rust"},
+  highlight = { enable = true },
+  indent = { enable = true },
+})
+
+-- colorscheme
 require("catppuccin").setup()
 vim.cmd.colorscheme "catppuccin"
