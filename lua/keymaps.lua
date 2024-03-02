@@ -5,5 +5,5 @@ vim.g.mapleader = " "
 vim.keymap.set('i', 'jk', '<Esc>') -- exit insert mode with 'jk'
 
 -- save files
-vim.keymap.set('n', '<leader>fs', "<cmd>w<cr>", {}) -- save current file
-vim.keymap.set('n', '<leader>fa', "<cmd>wa<cr>", {}) -- save all files
+vim.keymap.set('n', '<leader>sf', "<cmd>w<cr>", {}) -- save current file
+vim.keymap.set('n', '<leader>sa', "<cmd>wa<cr>", {}) -- save all files
