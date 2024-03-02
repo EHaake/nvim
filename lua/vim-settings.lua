@@ -6,4 +6,3 @@ vim.opt.scrolloff = 8  -- always have at least 8 line between cursor and end of 
 --
 -- add line numbers
 vim.wo.number = true
-			
