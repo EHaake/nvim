@@ -3,6 +3,7 @@
 --
 -- get lazy.nvim loaded
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
@@ -13,9 +14,10 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 -- load external modules
-require("keymaps")
-require("vim-options")
-require("lazy").setup("plugins")
+require("keymaps") -- load our keymaps file
+require("vim-settings") -- load our settings file
+require("lazy").setup("plugins") -- loads everything in /plugins
