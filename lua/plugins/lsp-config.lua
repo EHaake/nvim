@@ -2,8 +2,13 @@ return {
 	{
 		"williamboman/mason.nvim",
 		config = function()
-			require("mason").setup()
-		end
+			require("mason").setup({
+				ensure_installed = {
+					"prettier",
+					"eslint_d",
+				},
+			})
+		end,
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -13,9 +18,9 @@ return {
 					"lua_ls",
 					"rust_analyzer",
 					"tsserver",
-				}
+				},
 			})
-		end
+		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -26,9 +31,9 @@ return {
 			lspconfig.rust_analyzer.setup({})
 			lspconfig.tsserver.setup({})
 			-- Global LSP Keymaps
-			vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-			vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-			vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
-		end
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+		end,
 	},
 }
