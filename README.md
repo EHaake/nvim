@@ -1,5 +1,6 @@
 # Erik's Neovim config
 
+
 ## Introduction
 
 This config is modular in nature. The top level `init.lua` bootstraps the startup process.
@@ -25,9 +26,10 @@ The rest of the config is split into directories and files. All of the config is
 - telescope
 - todo-comments
 - treesitter
+- which-key
 
 
-# Acknowledgements
+## Acknowledgements
 
 - Followed instructional videos from [Typecraft](https://www.youtube.com/@typecraft_dev) to learn the basics.
 - Thanks to [cpow](https://github.com/cpow/neovim-for-newbs/tree/main) for the videos and helping me learn to roll my own Neovim :)

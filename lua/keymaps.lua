@@ -20,17 +20,17 @@ vim.keymap.set("n", "<leader>fs", "<cmd>w<cr>", { desc = "Save current file" })
 vim.keymap.set("n", "<leader>fw", "<cmd>wa<cr>", { desc = "Save all files " })
 
 -- Buffers
-vim.keymap.set("n", "<leader>bp", "<cmd>bp<cr>", { desc = "Go [B]uffer [P]revious" })
-vim.keymap.set("n", "<leader>bn", "<cmd>bn<cr>", { desc = "Go [B]uffer [N]ext" })
+vim.keymap.set("n", "<leader>bp", "<cmd>bp<cr>", { desc = "go to previous buffer" })
+vim.keymap.set("n", "<leader>bn", "<cmd>bn<cr>", { desc = "go to next buffer" })
 
 -- Clear highlight on pressing <Esc> in normal mode
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight " })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [d]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [d]iagnostic message" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [q]uickfix list" })
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
