@@ -20,5 +20,5 @@ vim.opt.rtp:prepend(lazypath)
 
 -- load external modules
 require("keymaps") -- load our keymaps file
-require("vim-settings") -- load our settings file
+require("settings") -- load our settings file
 require("lazy").setup("plugins") -- loads everything in /plugins

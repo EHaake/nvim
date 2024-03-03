@@ -14,3 +14,6 @@ vim.wo.number = true
 
 -- signcolumn always open so errors/warnings don't push buffer
 vim.o.signcolumn = "yes:1"
+--
+-- Set highlight on search
+vim.opt.hlsearch = true
