@@ -11,6 +11,7 @@ The rest of the config is split into directories and files. All of the config is
 - autopairs 
 - catppuccin
 - completions
+- conform
 - lazy
 - lualine
 - mason
@@ -22,6 +23,7 @@ The rest of the config is split into directories and files. All of the config is
 - nvim-lsp-config
 - rustaceanvim
 - telescope
+- todo-comments
 - treesitter
 
 
