@@ -1,4 +1,5 @@
 -- init.lua
+-- This is the starting point for all configuration in Neovim
 --
 --
 -- get lazy.nvim loaded
