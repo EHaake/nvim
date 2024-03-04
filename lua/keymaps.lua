@@ -16,8 +16,8 @@ vim.keymap.set("i", "<C-p>", "<up>", { desc = "Move cursor up in insert mode" })
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode with 'jk'" })
 
 -- save files
-vim.keymap.set("n", "<leader>fs", "<cmd>w<cr>", { desc = "Save current file" })
-vim.keymap.set("n", "<leader>fw", "<cmd>wa<cr>", { desc = "Save all files " })
+vim.keymap.set("n", "<leader>sf", "<cmd>w<cr>", { desc = "Save file" })
+vim.keymap.set("n", "<leader>sa", "<cmd>wa<cr>", { desc = "Save all files " })
 
 -- Buffers
 vim.keymap.set("n", "<leader>bp", "<cmd>bp<cr>", { desc = "go to previous buffer" })

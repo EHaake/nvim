@@ -83,7 +83,7 @@ return {
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "find by grep" })
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "find help" })
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "find keymaps" })
-			vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "find telescope" })
+			vim.keymap.set("n", "<leader>ft", builtin.builtin, { desc = "find telescope" })
 			vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "find current word" })
 			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "find diagnostics" })
 			vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "find resume" })

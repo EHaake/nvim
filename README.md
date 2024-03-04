@@ -11,6 +11,7 @@ The rest of the config is split into directories and files. All of the config is
 - alpha
 - autopairs 
 - catppuccin
+- comment
 - completions
 - conform
 - lazy
@@ -22,6 +23,7 @@ The rest of the config is split into directories and files. All of the config is
 - nvim-dap
 - nvim-dap-ui
 - nvim-lsp-config
+- nvim-surround
 - rustaceanvim
 - telescope
 - todo-comments
