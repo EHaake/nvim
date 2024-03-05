@@ -8,27 +8,45 @@ The rest of the config is split into directories and files. All of the config is
 
 
 ## Plugins
-- alpha
-- autopairs 
-- catppuccin
-- comment
-- completions
-- conform
-- lazy
-- lualine
+A list of the plugins I'm using, roughly categorized.
+
+### Packages
 - mason
-- mason-lsp-config
-- neotree
-- none-ls
-- nvim-dap
-- nvim-dap-ui
-- nvim-lsp-config
-- nvim-surround
-- rustaceanvim
+- lazy
+
+### Core Utility
+- completions
 - telescope
-- todo-comments
 - treesitter
 - which-key
+
+### Other Utility
+- alpha
+- autopairs 
+- comment
+- conform
+- lualine
+- mini
+- neotree
+- none-ls
+- nvim-surround
+- todo-comments
+
+### Configuration
+- mason-lsp-config
+- nvim-lsp-config
+
+### Debugging
+- nvim-dap
+- nvim-dap-ui
+
+### Themes
+- catppuccin
+
+### Language Specific
+####  Rust
+- crates
+- rustaceanvim
 
 
 ## Acknowledgements

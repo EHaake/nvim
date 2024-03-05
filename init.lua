@@ -9,4 +9,6 @@ require("keymaps") -- load our keymaps file
 
 require("settings") -- load our settings file
 
+require("autocmds") -- load autocmds file
+
 require("lazy").setup("plugins") -- loads everything in /plugins
