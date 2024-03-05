@@ -1,3 +1,4 @@
+-- :vert help comment.config
 return {
 	"numToStr/Comment.nvim",
 	opts = {

@@ -1,4 +1,4 @@
--- big thanks to TJ and his kickstart project.
+-- Big thanks to TJ and his kickstart project.
 -- I copied and pasted this file with minimal modifications from:
 -- https://github.com/dam9000/kickstart-modular.nvim/blob/master/lua/kickstart/plugins/lspconfig.lua
 return {
@@ -142,7 +142,12 @@ return {
 				clangd = {},
 				gopls = {},
 				pyright = {},
-				rust_analyzer = {},
+				--
+				-- NOTE: We're using rustacean nvim for rust so don't use rust-analyzer.
+				-- Make sure that rust-analyzer is NOT installed via Mason
+				-- This will cause issues such as duplicate diagnostics and error message
+				--
+				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:

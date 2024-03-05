@@ -5,6 +5,7 @@ return {
 	build = ":TSUpdate",
 	config = function()
 		local config = require("nvim-treesitter.configs")
+		---@diagnostic disable-next-line: missing-fields
 		config.setup({
 			ensure_installed = { "lua", "javascript", "rust", "c", "cpp", "html", "markdown", "python" },
 			-- Auto install languages that are not installed when opening a file of that type
