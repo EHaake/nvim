@@ -36,6 +36,7 @@ return {
 	{
 		"saecki/crates.nvim",
 		tag = "stable",
+		event = { "BufRead Cargo.toml" }, -- lazy load
 		config = function()
 			require("crates").setup()
 		end,
