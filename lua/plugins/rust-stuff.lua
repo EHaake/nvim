@@ -37,8 +37,11 @@ return {
 		"saecki/crates.nvim",
 		tag = "stable",
 		event = { "BufRead Cargo.toml" }, -- lazy load
-		config = function()
-			require("crates").setup()
+		ft = { "rust", "toml" },
+		config = function(_, opts)
+			local crates = require("crates")
+			crates.setup(opts)
+			crates.show()
 		end,
 	},
 }
