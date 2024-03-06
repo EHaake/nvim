@@ -1,5 +1,8 @@
 -- See `:help gitsigns` to understand what the configuration keys do
 return {
+	{
+		"tpope/vim-fugitive",
+	},
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
 		--
@@ -17,7 +20,7 @@ return {
 		config = function(_, opts)
 			require("gitsigns").setup(opts)
 			-- keymaps
-			vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<cr>", { desc = "gitsigns preview hunk" })
+			vim.keymap.set("n", "<leader>gph", ":Gitsigns preview_hunk<cr>", { desc = "gitsigns preview hunk" })
 			vim.keymap.set(
 				"n",
 				"<leader>gb",
