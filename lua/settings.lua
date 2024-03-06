@@ -1,5 +1,11 @@
 -- vim-settings.lua
 -- This file contains all the basic global vim settings I want
+--
+-- Neovide settings
+if vim.g.neovide then
+	-- vim.o.guifont = "Source Code Pro:h18"
+	vim.g.neovide_scale_factor = 1.2
+end
 
 -- tabs and spaces
 vim.cmd("set tabstop=2")

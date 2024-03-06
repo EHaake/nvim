@@ -55,4 +55,4 @@ A list of the plugins I'm using, roughly categorized.
 - Thanks to [cpow](https://github.com/cpow/neovim-for-newbs/tree/main) for the videos and helping me learn to roll my own Neovim :)
 - Many thanks to TJDevries and [kickstart.vim](https://github.com/nvim-lua/kickstart.nvim) for an amazing setup. I took a lot from his config there but had already started rolling my own config so I didn't want to fork it directly.
 
-- (Alpha Configuration)[https://medium.com/@shaikzahid0713/alpha-start-up-screen-8e4a6e95804d]
+- [Alpha Configuration](https://medium.com/@shaikzahid0713/alpha-start-up-screen-8e4a6e95804d)
