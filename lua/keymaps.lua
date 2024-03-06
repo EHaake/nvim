@@ -11,6 +11,8 @@ vim.keymap.set("i", "<C-f>", "<right>", { desc = "Move cursor right in insert mo
 vim.keymap.set("i", "<C-b>", "<left>", { desc = "Move cursor left in insert mode" })
 vim.keymap.set("i", "<C-n>", "<down>", { desc = "Move cursor down in insert mode" })
 vim.keymap.set("i", "<C-p>", "<up>", { desc = "Move cursor up in insert mode" })
+vim.keymap.set("i", "<C-e>", "<end>", { desc = "Move cursor to end of line in insert mode" })
+vim.keymap.set("i", "<C-a>", "<home>", { desc = "Move cursor to beginning of line in insert mode" })
 
 -- Escape insert mode
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode with 'jk'" })
