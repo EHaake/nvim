@@ -7,6 +7,12 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	config = function()
-		vim.keymap.set("n", "<C-n>", ":Neotree toggle <CR>")
+		vim.keymap.set("n", "<C-\\>", ":Neotree toggle <CR>", { desc = "toggle neotree files" })
+		vim.keymap.set(
+			"n",
+			"<leader>gs",
+			":Neotree toggle show git_status <CR>",
+			{ desc = "toggle neotree git status" }
+		)
 	end,
 }
