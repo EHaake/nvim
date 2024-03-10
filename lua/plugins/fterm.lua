@@ -1,3 +1,6 @@
+-- FTerm - simple floating terminal
+-- https://github.com/numtostr/FTerm.nvim
+-- :vert help FTerm.nvim-configuration
 return {
 	"numToStr/FTerm.nvim",
 
