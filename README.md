@@ -20,6 +20,9 @@ A list of the plugins I'm using, roughly categorized.
 - treesitter
 - which-key
 
+### Terminal
+- FTerm
+
 ### Other Utility
 - alpha
 - autopairs 
@@ -31,6 +34,10 @@ A list of the plugins I'm using, roughly categorized.
 - none-ls
 - nvim-surround
 - todo-comments
+
+### Git
+- Fugitive
+- Lazygit
 
 ### Configuration
 - mason-lsp-config
