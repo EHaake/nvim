@@ -47,8 +47,13 @@ A list of the plugins I'm using, roughly categorized.
 - nvim-dap
 - nvim-dap-ui
 
-### Themes
+### Themes and Aesthetics
 - catppuccin
+- one-nord
+- kanagawa
+- tokyonight
+- nordic
+- dressing
 
 ### Language Specific
 ####  Rust
