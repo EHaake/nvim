@@ -22,7 +22,10 @@ return {
 			--  nvim-cmp does not ship with all sources by default. They are split
 			--  into multiple repos for maintenance purposes.
 			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"onsails/lspkind.nvim",
+			"windwp/nvim-ts-autotag",
 
 			-- If you want to add a bunch of pre-configured snippets,
 			--    you can use this plugin to help you. It even has snippets
@@ -35,6 +38,7 @@ return {
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			luasnip.config.setup({})
+			local lspkind = require("lspkind")
 
 			cmp.setup({
 				snippet = {
@@ -47,7 +51,8 @@ return {
 				-- For an understanding of why these mappings were
 				-- chosen, you will need to read `:help ins-completion`
 				--
-				-- No, but seriously. Please read `:help ins-completion`, it is really good!
+				-- No, but seriously. Please read `:help ins-completion`,
+				-- it is really good!
 				mapping = cmp.mapping.preset.insert({
 					-- Select the [n]ext item
 					["<C-n>"] = cmp.mapping.select_next_item(),
@@ -87,8 +92,23 @@ return {
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
-					{ name = "path" },
-					{ name = "buffer" },
+					{ name = "buffer", max_item_count = 5 },
+					{ name = "path", max_item_count = 3 },
+				},
+
+				-- Adds the icons in the completion popup window
+				formatting = {
+					expandable_indicator = true,
+					format = lspkind.cmp_format({
+						mode = "symbol_text",
+						maxwidth = 50,
+						ellipsis_char = "...",
+					})
+				},
+
+				experimental = {
+					-- text that shows up while typing but not in buffer yet
+					ghost_text = true,
 				},
 			})
 		end,
