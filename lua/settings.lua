@@ -9,9 +9,9 @@ if vim.g.neovide then
 end
 
 -- tabs and spaces
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 
 -- Scrolling
 vim.opt.scrolloff = 8 -- always have at least 8 line between cursor and end of buffer
@@ -41,6 +41,19 @@ vim.opt.undofile = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Enable mouse mode
+vim.opt.mouse = "a"
+
+-- Ignore casing in search + smartcase
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- completion popups
+vim.opt.completeopt = { "menuone", "noselect" }
+
+-- Turn on 24 bit colors
+vim.opt.termguicolors = true
+
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
@@ -49,6 +62,9 @@ vim.opt.splitbelow = true
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
+
+-- display 80 columnwidth at 80 chars
+vim.opt.colorcolumn = "80"
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
