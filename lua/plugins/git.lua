@@ -1,10 +1,8 @@
 -- See `:help gitsigns` to understand what the configuration keys do
 return {
-	{
-		"tpope/vim-fugitive",
-	},
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
+		event = "VeryLazy",
 		--
 		-- NOTE: example of how to set different icons for changes
 		--
@@ -27,6 +25,14 @@ return {
 				":Gitsigns toggle_current_line_blame<cr>",
 				{ desc = "gitsigns toggle line blame" }
 			)
+		end,
+	},
+	{
+		"kdheepak/lazygit.nvim",
+		config = function()
+			require("telescope").load_extension("lazygit")
+
+			vim.keymap.set("n", "<leader>gg", ":LazyGit<cr>", { desc = "LazyGit" })
 		end,
 	},
 }
