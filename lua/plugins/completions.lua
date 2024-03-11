@@ -91,9 +91,9 @@ return {
 				-- Add sources for competion here
 				sources = {
 					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
 					{ name = "buffer", max_item_count = 5 },
 					{ name = "path", max_item_count = 3 },
+					{ name = "luasnip" },
 				},
 
 				-- Adds the icons in the completion popup window
