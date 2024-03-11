@@ -48,9 +48,6 @@ vim.opt.mouse = "a"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- completion popups
-vim.opt.completeopt = { "menuone", "noselect" }
-
 -- Turn on 24 bit colors
 vim.opt.termguicolors = true
 
