@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 -- get lazy.nvim loaded
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
