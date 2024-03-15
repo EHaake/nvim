@@ -30,6 +30,7 @@ A list of the plugins I'm using, roughly categorized.
 - conform
 - lualine
 - harpoon
+- illuminate
 - mini
 - neotree
 - none-ls
