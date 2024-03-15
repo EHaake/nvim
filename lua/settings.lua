@@ -60,9 +60,6 @@ vim.opt.termguicolors = true
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"
 
--- display 80 columnwidth at 80 chars
-vim.opt.colorcolumn = "80"
-
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 

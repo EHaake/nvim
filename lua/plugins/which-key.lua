@@ -15,6 +15,7 @@ return {
 				["<leader>f"] = { name = "[f]ind", _ = "which_key_ignore" },
 				["<leader>b"] = { name = "[b]uffer", _ = "which_key_ignore" },
 				["<leader>g"] = { name = "[g]it", _ = "which_key_ignore" },
+				["<leader>u"] = { name = "[u]i", _ = "which_key_ignore" },
 			})
 		end,
 	},
