@@ -31,6 +31,7 @@ A list of the plugins I'm using, roughly categorized.
 - lualine
 - harpoon
 - illuminate
+- markdown-preview
 - mini
 - neotree
 - none-ls
