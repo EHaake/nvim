@@ -36,6 +36,7 @@ A list of the plugins I'm using, roughly categorized.
 - neotree
 - none-ls
 - nvim-surround
+- oil
 - todo-comments
 
 ### Git
