@@ -24,6 +24,7 @@ return {
 			return string.format("󱡅 %s/%d", current_mark, total_marks)
 		end
 
+---@diagnostic disable-next-line: undefined-field
 		require("lualine").setup({
 			options = {
 				-- theme = 'tokyonight'
