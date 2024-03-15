@@ -36,7 +36,7 @@ return {
 		}
 
 		-- keymaps
-		vim.keymap.set("n", "<leader>a", "<cmd>Alpha<cr>", {})
+		vim.keymap.set("n", "<leader>a", "<cmd>Alpha<cr>", { desc = "Become Alpha" })
 
 		local function footer()
 			return "Chop 'till you plop..."
