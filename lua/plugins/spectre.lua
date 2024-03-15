@@ -26,5 +26,8 @@ return {
 				},
 			},
 		})
+
+		-- keymaps
+		vim.keymap.set("n", "<leader>S", "<cmd>Spectre<cr>", { desc = "Spectre (find and replace)" })
 	end,
 }
