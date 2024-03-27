@@ -1,3 +1,5 @@
+-- From Dillon Mulroy's setup: 
+-- https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/plugins/spectre.lua
 return {
 	"nvim-pack/nvim-spectre",
 	lazy = true,

@@ -1,4 +1,4 @@
--- From:
+-- From Dillon Mulroy's setup:
 -- https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/plugins/oil.lua
 return {
 	"stevearc/oil.nvim",

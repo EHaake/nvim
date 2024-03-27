@@ -1,3 +1,5 @@
+-- From Dillon Mulroy's setup:
+-- https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/plugins/wilder.lua
 return {
 	{
 		"gelguy/wilder.nvim",
