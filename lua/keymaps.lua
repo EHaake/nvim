@@ -28,6 +28,7 @@ vim.keymap.set("n", "<leader>sa", "<cmd>wa<cr>", { desc = "Save all files " })
 -- Buffers
 vim.keymap.set("n", "<leader>bp", "<cmd>bp<cr>", { desc = "go to previous buffer" })
 vim.keymap.set("n", "<leader>bn", "<cmd>bn<cr>", { desc = "go to next buffer" })
+vim.keymap.set("n", "<leader>bc", "<cmd>close<cr>", { desc = "close buffer" })
 
 -- Clear highlight on pressing <Esc> in normal mode
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight " })
@@ -36,7 +37,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight " 
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [d]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [d]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [q]uickfix list" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setqflist, { desc = "Open diagnostic [q]uickfix list" })
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
