@@ -58,3 +58,29 @@ vim.api.nvim_create_user_command("ToggleDiagnostics", function()
 		vim.diagnostic.enable()
 	end
 end, {})
+
+
+-- Toggles the Quick Fix list by setting and opening it if it doesn't exist,
+-- and closing it otherwise.
+vim.api.nvim_create_user_command("ToggleQFList", function()
+  local qf_exists = false
+
+	-- Get the current windoes
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win["quickfix"] == 1 then
+      qf_exists = true
+    end
+  end
+
+	-- If quickfix is one of the windows...
+  if qf_exists == true then
+    vim.cmd "cclose"
+    return
+  end
+
+	-- otherwise set the qflist and open it.
+	if not qf_exists then
+		vim.diagnostic.setqflist()
+    vim.cmd "copen"
+	end
+end, {})
