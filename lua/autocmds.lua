@@ -65,7 +65,7 @@ end, {})
 vim.api.nvim_create_user_command("ToggleQFList", function()
   local qf_exists = false
 
-	-- Get the current windoes
+	-- Get the current windows
   for _, win in pairs(vim.fn.getwininfo()) do
     if win["quickfix"] == 1 then
       qf_exists = true
