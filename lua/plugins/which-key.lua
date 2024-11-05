@@ -3,33 +3,32 @@ return {
 		"folke/which-key.nvim",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
 		config = function() -- This is the function that runs, AFTER loading
-			require("which-key").setup()
-
 			-- Document Prefixes
 			require("which-key").add({
-					{ "", group = "[u]i" },
-					{ "", group = "[h]arpoon" },
+					{ "<leader>u", group = "[u]i" },
+					{ "<leader>h", group = "[h]arpoon" },
 					{ "", desc = "<leader>g_", hidden = true },
-					{ "", group = "[g]it" },
+					{ "<leader>g", group = "[g]it" },
 					{ "", desc = "<leader>f_", hidden = true },
 					{ "", desc = "<leader>h_", hidden = true },
 					{ "", desc = "<leader>m_", hidden = true },
-					{ "", group = "[m]arkdown" },
+					{ "<leader>m", group = "[m]arkdown" },
 					{ "", desc = "<leader>r_", hidden = true },
-					{ "", group = "[r]ename" },
-					{ "", group = "[s]ave" },
-					{ "", group = "[f]ind" },
-					{ "", group = "[d]ebug" },
+					{ "<leader>r", group = "[r]ename" },
+					{ "<leader>s", group = "[s]ave" },
+					{ "<leader>f", group = "[f]ind" },
+					{ "<leader>d", group = "[d]ebug" },
 					{ "", desc = "<leader>w_", hidden = true },
-					{ "", group = "[w]orkspace" },
+					{ "<leader>w", group = "[w]orkspace" },
 					{ "", desc = "<leader>u_", hidden = true },
 					{ "", desc = "<leader>d_", hidden = true },
-					{ "", group = "[b]uffer" },
-					{ "", group = "[c]ode/[c]omment" },
+					{ "<leader>b", group = "[b]uffer" },
+					{ "<leader>c", group = "[c]ode/[c]omment" },
 					{ "", desc = "<leader>b_", hidden = true },
 					{ "", desc = "<leader>c_", hidden = true },
 					{ "", desc = "<leader>s_", hidden = true },
 				})
+			require("which-key").setup()
 		end,
 	},
 }
