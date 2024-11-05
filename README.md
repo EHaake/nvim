@@ -35,6 +35,7 @@ A list of the plugins I'm using, roughly categorized.
 - markdown-preview
 - mini
 - neotree
+- neotest
 - none-ls
 - nvim-surround
 - oil

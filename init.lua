@@ -1,5 +1,4 @@
--- init.lua
--- This is the starting point for all configuration in Neovim
+
 --
 -- load external modules
 require("lazy-bootstrap") -- load lazy bootstrap
