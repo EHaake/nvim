@@ -14,5 +14,6 @@ return {
 			":Neotree toggle show git_status <CR>",
 			{ desc = "toggle neotree git status" }
 		)
+		require("neo-tree").setup()
 	end,
 }

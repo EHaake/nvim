@@ -6,19 +6,30 @@ return {
 			require("which-key").setup()
 
 			-- Document Prefixes
-			require("which-key").register({
-				["<leader>c"] = { name = "[c]ode/[c]omment", _ = "which_key_ignore" },
-				["<leader>d"] = { name = "[d]ebug", _ = "which_key_ignore" },
-				["<leader>r"] = { name = "[r]ename", _ = "which_key_ignore" },
-				["<leader>s"] = { name = "[s]ave", _ = "which_key_ignore" },
-				["<leader>w"] = { name = "[w]orkspace", _ = "which_key_ignore" },
-				["<leader>f"] = { name = "[f]ind", _ = "which_key_ignore" },
-				["<leader>b"] = { name = "[b]uffer", _ = "which_key_ignore" },
-				["<leader>g"] = { name = "[g]it", _ = "which_key_ignore" },
-				["<leader>u"] = { name = "[u]i", _ = "which_key_ignore" },
-				["<leader>h"] = { name = "[h]arpoon", _ = "which_key_ignore" },
-				["<leader>m"] = { name = "[m]arkdown", _ = "which_key_ignore" },
-			})
+			require("which-key").add({
+					{ "", group = "[u]i" },
+					{ "", group = "[h]arpoon" },
+					{ "", desc = "<leader>g_", hidden = true },
+					{ "", group = "[g]it" },
+					{ "", desc = "<leader>f_", hidden = true },
+					{ "", desc = "<leader>h_", hidden = true },
+					{ "", desc = "<leader>m_", hidden = true },
+					{ "", group = "[m]arkdown" },
+					{ "", desc = "<leader>r_", hidden = true },
+					{ "", group = "[r]ename" },
+					{ "", group = "[s]ave" },
+					{ "", group = "[f]ind" },
+					{ "", group = "[d]ebug" },
+					{ "", desc = "<leader>w_", hidden = true },
+					{ "", group = "[w]orkspace" },
+					{ "", desc = "<leader>u_", hidden = true },
+					{ "", desc = "<leader>d_", hidden = true },
+					{ "", group = "[b]uffer" },
+					{ "", group = "[c]ode/[c]omment" },
+					{ "", desc = "<leader>b_", hidden = true },
+					{ "", desc = "<leader>c_", hidden = true },
+					{ "", desc = "<leader>s_", hidden = true },
+				})
 		end,
 	},
 }
