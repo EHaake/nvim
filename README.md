@@ -4,7 +4,7 @@
 ## Introduction
 
 This config is modular in nature. The top level `init.lua` bootstraps the startup process.
-The rest of the config is split into directories and files. All of the config is in the `lua/` directory and the plugins are in the `lua/plugins/` directory. Most of the plugins and their setup/config are in their own files, but a few such as lsp-configuration are groupted in a file with the relevant name.
+The rest of the config is split into directories and files. All of the config is in the `lua/` directory and the plugins are in the `lua/plugins/` directory. Most of the plugins and their setup/config are in their own files, but a few such as lsp-configuration are grouped in a file with the relevant name.
 
 
 ## Plugins
