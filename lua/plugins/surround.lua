@@ -8,3 +8,7 @@ return {
         })
     end
 }
+
+-- To access documentation: 
+-- :h nvim-surround.usage
+-- :h nvim-surround.configuration
