@@ -2,7 +2,6 @@
 
 
 ## Introduction
-
 This config is modular in nature. The top level `init.lua` bootstraps the startup process.
 The rest of the config is split into directories and files. All of the config is in the `lua/` directory and the plugins are in the `lua/plugins/` directory. Most of the plugins and their setup/config are in their own files, but a few such as lsp-configuration are grouped in a file with the relevant name.
 
@@ -37,7 +36,7 @@ A list of the plugins I'm using, roughly categorized.
 - neotree
 - neotest
 - none-ls
-- nvim-surround
+- [nvim-surround](https://github.com/kylechui/nvim-surround)
 - oil
 - todo-comments
 - wilder
