@@ -5,7 +5,7 @@
 if vim.g.neovide then
 	vim.o.guifont = "JetBrains Mono:h13"
 	-- vim.o.guifont = "Anonymous Pro:h14"
-	vim.g.neovide_scale_factor = 1.2
+	vim.g.neovide_scale_factor = 1.4
 end
 
 -- tabs and spaces
