@@ -64,7 +64,15 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 
 vim.diagnostic.config({
-	float = {
-		source = "always",
+	-- float = {
+	-- 	source = "always",
+	-- },
+	virtual_text = {
+		spacing = 4,      -- space between text and code
+		prefix = "●",     -- or "■", "▎", "●", "", etc.
+		source = "if_many", -- show source in message if multiple
 	},
+	signs = true,
+	underline = true,
+	update_in_insert = false,
 })
