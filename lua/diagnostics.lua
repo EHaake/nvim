@@ -3,16 +3,18 @@
 local M = {}
 
 local severity = vim.diagnostic.severity
-local diagnostics_active = true
+
+-- Separate toggles
+local virtual_text_enabled = true
+local signs_enabled = true
 
 -- Which sources are allowed to show INLINE text
--- (signs/underlines still show regardless)
 local allowed_sources = {
   ["rust-analyzer"] = true,
   ["rustc"] = true,
 }
 
--- Base config used when diagnostics are "on"
+-- Base config for virtual text when it's enabled
 local base_virtual_text = {
   spacing = 2,
   prefix = "●",
@@ -40,43 +42,76 @@ local base_virtual_text = {
 
 function M.apply()
   vim.diagnostic.config({
-    virtual_text = diagnostics_active and base_virtual_text or false,
-    signs = diagnostics_active,
-    underline = diagnostics_active,
+    virtual_text = virtual_text_enabled and base_virtual_text or false,
+    signs = signs_enabled,
+    underline = true,        -- you can also make this a third toggle if you want
     update_in_insert = false,
   })
 end
 
-function M.enable()
-  diagnostics_active = true
+-- Inline / virtual text toggles
+function M.enable_virtual_text()
+  virtual_text_enabled = true
   M.apply()
 end
 
-function M.disable()
-  diagnostics_active = false
+function M.disable_virtual_text()
+  virtual_text_enabled = false
   M.apply()
 end
 
-function M.toggle()
-  diagnostics_active = not diagnostics_active
+function M.toggle_virtual_text()
+  virtual_text_enabled = not virtual_text_enabled
   M.apply()
 end
 
--- Only rust-analyzer inline text
+-- Gutter sign toggles
+function M.enable_signs()
+  signs_enabled = true
+  M.apply()
+end
+
+function M.disable_signs()
+  signs_enabled = false
+  M.apply()
+end
+
+function M.toggle_signs()
+  signs_enabled = not signs_enabled
+  M.apply()
+end
+
+-- Source filters
 function M.only_rust_analyzer()
   allowed_sources["rust-analyzer"] = true
   allowed_sources["rustc"] = false
   M.apply()
 end
 
--- rust-analyzer + rustc inline text
 function M.allow_rustc()
   allowed_sources["rust-analyzer"] = true
   allowed_sources["rustc"] = true
   M.apply()
 end
 
--- initialize once on startup
-M.enable()
+-- Preset modes
+-- Quiet mode: no inline text, no signs (but diagnostics still exist for floats, etc.)
+function M.mode_quiet()
+  virtual_text_enabled = false
+  signs_enabled = false
+  M.apply()
+end
+
+-- Full compiler mode: rust-analyzer + rustc inline, signs on
+function M.mode_full()
+  virtual_text_enabled = true
+  signs_enabled = true
+  allowed_sources["rust-analyzer"] = true
+  allowed_sources["rustc"] = true
+  M.apply()
+end
+
+-- Initialize once on startup
+M.apply()
 
 return M

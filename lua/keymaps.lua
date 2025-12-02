@@ -33,6 +33,7 @@ vim.keymap.set("n", "<leader>bc", "<cmd>close<cr>", { desc = "close buffer" })
 -- Clear highlight on pressing <Esc> in normal mode
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight " })
 
+--
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [d]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [d]iagnostic message" })
@@ -45,17 +46,53 @@ vim.keymap.set("n", "<leader>e", function()
   })
 end, { desc = "Line diagnostics" })
 
---
--- Custom Diagnostics
+-- =========================================================
+-- UI → Diagnostics (global)
+-- =========================================================
 local diag = require("diagnostics")
-vim.keymap.set("n", "<leader>td", function()
-  diag.toggle()
-end, { desc = "Toggle diagnostics" })
 
--- Optional: quick source toggles
-vim.keymap.set("n", "<leader>tra", diag.only_rust_analyzer, { desc = "Diagnostics: rust-analyzer only" })
-vim.keymap.set("n", "<leader>trc", diag.allow_rustc, { desc = "Diagnostics: rust-analyzer + rustc" })
+-- Toggle inline diagnostics (virtual text)
+vim.keymap.set("n", "<leader>udi", function()
+  diag.toggle_virtual_text()
+end, { desc = "Diagnostics → toggle inline text" })
 
+-- Toggle diagnostic signs (gutter)
+vim.keymap.set("n", "<leader>udg", function()
+  diag.toggle_signs()
+end, { desc = "Diagnostics → toggle gutter signs" })
+
+-- Preset modes
+vim.keymap.set("n", "<leader>udq", function()
+  diag.mode_quiet()
+end, { desc = "Diagnostics → quiet mode (no inline, no signs)" })
+
+-- vim.keymap.set("n", "<leader>udi", function()
+--   diag.mode_ide()
+-- end, { desc = "Diagnostics → IDE mode (inline only)" })
+
+vim.keymap.set("n", "<leader>udf", function()
+  diag.mode_full()
+end, { desc = "Diagnostics → full mode" })
+
+-- =========================================================
+-- UI → Diagnostics (Rust-only bindings)
+-- =========================================================
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function(args)
+    local buf = args.buf
+
+    -- Source filters: RA only vs RA + rustc
+    vim.keymap.set("n", "<leader>udra", function()
+      diag.only_rust_analyzer()
+    end, { buffer = buf, desc = "rust-analyzer only inline" })
+
+    vim.keymap.set("n", "<leader>udrc", function()
+      diag.allow_rustc()
+    end, { buffer = buf, desc = "rust-analyzer + rustc inline" })
+  end,
+})
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
