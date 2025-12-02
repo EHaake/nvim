@@ -98,6 +98,36 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.keymap.set("n", "<leader>uep", function()
+  local diags = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+  if #diags == 0 then
+    vim.api.nvim_echo({ { "No diagnostics on this line", "Comment" } }, false, {})
+    return
+  end
+
+  local msg = diags[1].message:gsub("\n.*", "")
+  vim.api.nvim_echo({ { msg, "WarningMsg" } }, false, {})
+end, { desc = "echo diagnostics (peek)" })
+
+-- Cycle severity: ERROR → WARN+ERROR → ALL
+vim.keymap.set("n", "<leader>udlc", function()
+  diag.cycle_severity()
+end, { desc = "Level → cycle (E → W+E → ALL)" })
+
+-- Set severity directly
+vim.keymap.set("n", "<leader>udle", function()
+  diag.only_errors()
+end, { desc = "Level → ERROR only" })
+
+vim.keymap.set("n", "<leader>udlw", function()
+  diag.warn_and_error()
+end, { desc = "Level → WARN + ERROR" })
+
+vim.keymap.set("n", "<leader>udla", function()
+  diag.all_severities()
+end, { desc = "Level → ALL severities" })
+
+
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })

@@ -15,22 +15,20 @@ local allowed_sources = {
 }
 
 -- Base config for virtual text when it's enabled
+local min_severity = severity.WARN
 local base_virtual_text = {
   spacing = 2,
   prefix = "●",
   severity = {
-    min = severity.WARN, -- only WARN and ERROR inline
+    min = min_severity,
   },
   format = function(diagnostic)
-    -- 1) Per-source filter: hide inline text for disallowed sources
+    -- your existing source filter + shortening logic
     if diagnostic.source and allowed_sources[diagnostic.source] == false then
-      return nil -- no virtual text for this diagnostic
+      return nil
     end
 
-    -- 2) First line only
     local msg = diagnostic.message:gsub("\n.*", "")
-
-    -- 3) Truncate long messages
     local max = 80
     if #msg > max then
       msg = msg:sub(1, max - 3) .. "..."
@@ -40,11 +38,68 @@ local base_virtual_text = {
   end,
 }
 
+-- =========================
+-- Severity controls
+-- =========================
+
+local severity_cycle = {
+  severity.ERROR,  -- errors only
+  severity.WARN,   -- warn + error
+  severity.HINT,   -- all severities (HINT/INFO/WARN/ERROR)
+}
+
+local severity_labels = {
+  [severity.ERROR] = "ERROR only",
+  [severity.WARN]  = "WARN + ERROR",
+  [severity.HINT]  = "ALL severities",
+}
+
+local severity_cycle_index = 2 -- default: WARN + ERROR
+
+-- Set minimum severity directly
+function M.set_min_severity(level)
+  min_severity = level
+  base_virtual_text.severity = { min = level }
+  M.apply()
+
+  local label = severity_labels[level] or tostring(level)
+  vim.notify("Diagnostics severity: " .. label, vim.log.levels.INFO)
+end
+
+-- Convenience wrappers
+function M.only_errors()
+  M.set_min_severity(severity.ERROR)
+end
+
+function M.warn_and_error()
+  M.set_min_severity(severity.WARN)
+end
+
+function M.all_severities()
+  M.set_min_severity(severity.HINT)
+end
+
+-- Cycle between ERROR → WARN+ERROR → ALL
+function M.cycle_severity()
+  severity_cycle_index = severity_cycle_index % #severity_cycle + 1
+  local level = severity_cycle[severity_cycle_index]
+  M.set_min_severity(level)
+end
+
+
 function M.apply()
+  local signs_cfg = signs_enabled and { severity = { min = min_severity } } or false
+
+  local underline_cfg = {
+    severity = {
+      min = min_severity,
+    },
+  }
+
   vim.diagnostic.config({
     virtual_text = virtual_text_enabled and base_virtual_text or false,
-    signs = signs_enabled,
-    underline = true,        -- you can also make this a third toggle if you want
+    signs = signs_cfg,
+    underline = underline_cfg,
     update_in_insert = false,
   })
 end

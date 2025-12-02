@@ -7,6 +7,8 @@ return {
 			require("which-key").add({
 					{ "<leader>u", group = "[u]i" },
 					{ "<leader>ud", group = "[d]iagnostics" },
+					{ "<leader>udl", group = "[l]evel" },
+					{ "<leader>ue", group = "[e]cho" },
 					{ "<leader>udr", group = "[r]ust diagnostics" },
 					{ "<leader>h", group = "[h]arpoon" },
 					{ "", desc = "<leader>g_", hidden = true },
