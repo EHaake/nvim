@@ -127,6 +127,11 @@ vim.keymap.set("n", "<leader>udla", function()
   diag.all_severities()
 end, { desc = "Level → ALL severities" })
 
+vim.keymap.set("n", "<leader>uI", function()
+  vim.cmd("LspInfo")
+  vim.cmd("messages")
+end, { desc = "Inspector (Dump all LSP + diagnostics)" })
+
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
