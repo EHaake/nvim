@@ -24,6 +24,10 @@ return {
 					default_settings = {
 						["rust-analyzer"] = {
 							cargo = { allFeatures = true },
+							checkOnSave = {
+								enable = true,        -- or false to disable rustc check diagnostics
+								command = "clippy",   -- or "check"
+							},
 						},
 					},
 				},

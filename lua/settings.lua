@@ -64,15 +64,25 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 
 vim.diagnostic.config({
-	-- float = {
-	-- 	source = "always",
-	-- },
-	virtual_text = {
-		spacing = 4,      -- space between text and code
-		prefix = "●",     -- or "■", "▎", "●", "", etc.
-		source = "if_many", -- show source in message if multiple
+	float = {
+		source = "always",
 	},
-	signs = true,
-	underline = true,
-	update_in_insert = false,
+	virtual_text = {
+		spacing = 2,
+		prefix = "●",
+		severity = { -- only WARN and ERROR will show inline
+			min = vim.diagnostic.severity.WARN,
+		},
+		-- format each diagnostic message passed to the severity filter
+		format = function(diagnostic)
+			-- strip everything after the first line (after the first line \n.*, replace with "")
+			local msg = diagnostic.message:gsub("\n.*", "")
+			-- Inline messages never more than 80 chars
+			local max = 80
+			if #msg > max then
+				msg = msg:sub(1, max - 3) .. "..."
+			end
+			return msg
+		end,
+	},
 })

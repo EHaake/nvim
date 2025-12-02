@@ -36,8 +36,26 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight " 
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [d]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [d]iagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [e]rror messages" })
 vim.keymap.set("n", "<leader>q", "<cmd>ToggleQFList<cr>", { desc = "Toggle diagnostic [q]uickfix list" })
+vim.keymap.set("n", "<leader>e", function()
+  vim.diagnostic.open_float(nil, {
+    focus = false,
+    scope = "cursor",
+    border = "rounded",
+  })
+end, { desc = "Line diagnostics" })
+
+--
+-- Custom Diagnostics
+local diag = require("diagnostics")
+vim.keymap.set("n", "<leader>td", function()
+  diag.toggle()
+end, { desc = "Toggle diagnostics" })
+
+-- Optional: quick source toggles
+vim.keymap.set("n", "<leader>tra", diag.only_rust_analyzer, { desc = "Diagnostics: rust-analyzer only" })
+vim.keymap.set("n", "<leader>trc", diag.allow_rustc, { desc = "Diagnostics: rust-analyzer + rustc" })
+
 
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
