@@ -34,21 +34,31 @@ vim.keymap.set("n", "<leader>bc", "<cmd>close<cr>", { desc = "close buffer" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlight " })
 
 --
--- Diagnostic keymaps
+-- Diagnostic navigation
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [d]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [d]iagnostic message" })
 vim.keymap.set("n", "<leader>q", "<cmd>ToggleQFList<cr>", { desc = "Toggle diagnostic [q]uickfix list" })
+-- Diagnostic Popup toggle
 vim.keymap.set("n", "<leader>e", function()
+  -- Check if a floating window already exists
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local cfg = vim.api.nvim_win_get_config(win)
+    if cfg.relative ~= "" then
+      vim.api.nvim_win_close(win, false)
+      return
+    end
+  end
+
+  -- Otherwise, open diagnostic float
   vim.diagnostic.open_float(nil, {
     focus = false,
     scope = "cursor",
     border = "rounded",
   })
-end, { desc = "Line diagnostics" })
+end, { desc = "Toggle line diagnostics popup" })
 
--- =========================================================
--- UI → Diagnostics (global)
--- =========================================================
+--
+-- UI → Diagnostics toggles (global)
 local diag = require("diagnostics")
 
 -- Toggle inline diagnostics (virtual text)
@@ -66,18 +76,12 @@ vim.keymap.set("n", "<leader>udq", function()
   diag.mode_quiet()
 end, { desc = "Diagnostics → quiet mode (no inline, no signs)" })
 
--- vim.keymap.set("n", "<leader>udi", function()
---   diag.mode_ide()
--- end, { desc = "Diagnostics → IDE mode (inline only)" })
-
 vim.keymap.set("n", "<leader>udf", function()
   diag.mode_full()
 end, { desc = "Diagnostics → full mode" })
 
--- =========================================================
--- UI → Diagnostics (Rust-only bindings)
--- =========================================================
-
+--
+-- UI → Diagnostics toggles (Rust-only bindings)
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "rust",
   callback = function(args)
