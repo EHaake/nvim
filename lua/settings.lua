@@ -80,5 +80,10 @@ vim.opt.inccommand = "split" -- live preview of :s substitutions
 vim.opt.undofile = true -- persistent undo across sessions
 vim.opt.clipboard = "unnamedplus" -- share the system clipboard
 
+-- [[ Formatting ]]
+-- Format on save (conform.nvim) is on by default; uncomment to start with it off.
+-- Toggle at runtime with <leader>uf (global) or <leader>uF (buffer).
+-- vim.g.autoformat = false
+
 -- Diagnostics (virtual text, signs, severity filters) are configured in
 -- lua/diagnostics.lua so the runtime toggles and the defaults live together.

@@ -8,6 +8,7 @@
 -- and labelled for which-key in lua/plugins/which-key.lua:
 --
 --   <leader>b   buffer        <leader>h   harpoon
+--   <leader>gh  git hunks     <leader>s   save / session
 --   <leader>c   code (LSP)    <leader>m   markdown
 --   <leader>d   debug         <leader>s   save
 --   <leader>f   find          <leader>t   test
@@ -54,6 +55,7 @@ map("n", "<leader>sa", "<cmd>wa<CR>", { desc = "Save all files" })
 map("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 map("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<leader>bc", "<cmd>close<CR>", { desc = "Close window" })
+-- <leader>bd (delete buffer, keep window layout) lives in lua/plugins/snacks.lua.
 
 -- [[ Diagnostics ]]
 -- Neovim 0.11 maps [d / ]d to vim.diagnostic.jump by default; these override

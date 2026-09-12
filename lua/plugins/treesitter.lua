@@ -16,39 +16,47 @@
 -- main-branch README). `master` keeps working on 0.11 in the meantime.
 
 return {
-	"nvim-treesitter/nvim-treesitter",
-	branch = "master",
-	lazy = false,
-	build = ":TSUpdate",
-	config = function()
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup({
-			ensure_installed = {
-				"bash",
-				"c",
-				"cpp",
-				"css",
-				"dockerfile",
-				"go",
-				"gomod",
-				"html",
-				"javascript",
-				"json",
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"python",
-				"rust",
-				"toml",
-				"tsx",
-				"typescript",
-				"vim",
-				"vimdoc",
-				"yaml",
-			},
-			auto_install = true,
-			highlight = { enable = true },
-			indent = { enable = true },
-		})
-	end,
+	{
+		"nvim-treesitter/nvim-treesitter",
+		branch = "master",
+		lazy = false,
+		build = ":TSUpdate",
+		config = function()
+			---@diagnostic disable-next-line: missing-fields
+			require("nvim-treesitter.configs").setup({
+				ensure_installed = {
+					"bash",
+					"c",
+					"cpp",
+					"css",
+					"dockerfile",
+					"go",
+					"gomod",
+					"html",
+					"javascript",
+					"json",
+					"lua",
+					"markdown",
+					"markdown_inline",
+					"python",
+					"rust",
+					"toml",
+					"tsx",
+					"typescript",
+					"vim",
+					"vimdoc",
+					"yaml",
+				},
+				auto_install = true,
+				highlight = { enable = true },
+				indent = { enable = true },
+			})
+		end,
+	},
+	{
+		-- Auto-close and auto-rename HTML/JSX/TSX tags using treesitter.
+		"windwp/nvim-ts-autotag",
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {},
+	},
 }

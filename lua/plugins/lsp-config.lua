@@ -30,8 +30,8 @@ return {
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
-			-- Extra client capabilities (snippets, etc.) that nvim-cmp understands.
-			"hrsh7th/cmp-nvim-lsp",
+			-- Extra client capabilities (snippets, etc.) that blink.cmp understands.
+			"saghen/blink.cmp",
 		},
 		config = function()
 			-- [[ Per-buffer keymaps ]]
@@ -96,9 +96,9 @@ return {
 			})
 
 			-- [[ Capabilities ]]
-			-- Tell every server what the client (Neovim + nvim-cmp) supports.
+			-- Tell every server what the client (Neovim + blink.cmp) supports.
 			vim.lsp.config("*", {
-				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+				capabilities = require("blink.cmp").get_lsp_capabilities(),
 			})
 
 			-- [[ Servers ]]
@@ -110,6 +110,7 @@ return {
 				clangd = {},
 				gopls = {},
 				pyright = {},
+				ruff = {}, -- linting, import sorting, formatting (used by conform too)
 				ts_ls = {},
 				lua_ls = {
 					settings = {
@@ -136,9 +137,10 @@ return {
 			end
 
 			-- [[ Install ]]
-			-- Servers above plus the formatters conform.nvim uses (lua/plugins/conform.lua).
+			-- Servers above, the formatters conform.nvim uses (lua/plugins/conform.lua),
+			-- and codelldb, the debug adapter rustaceanvim uses for Rust.
 			local ensure_installed = vim.tbl_keys(servers)
-			vim.list_extend(ensure_installed, { "stylua", "prettierd", "isort", "black" })
+			vim.list_extend(ensure_installed, { "stylua", "prettierd", "codelldb" })
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			-- Enable every Mason-installed server. rust_analyzer is excluded in

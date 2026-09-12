@@ -1,22 +1,28 @@
 -- completions.lua
 --
--- Autocompletion with nvim-cmp plus LuaSnip for snippets. Adapted from
--- kickstart.nvim. Loaded on the first InsertEnter; nvim-lspconfig also pulls
--- in cmp-nvim-lsp for its capabilities, which loads cmp when a file is opened.
+-- Autocompletion with blink.cmp (Rust fuzzy matcher, built-in LSP / path /
+-- snippet / buffer sources) plus LuaSnip for snippet expansion and
+-- friendly-snippets for a library of ready-made ones.
 --
--- Keys while the menu is open (see `:help ins-completion` for the reasoning):
---   <C-n> / <C-p>  next / previous item
---   <C-y>          accept the selected item
---   <C-Space>      open the menu manually
---   <C-l> / <C-h>  jump forward / back through snippet placeholders
+-- blink ships a prebuilt matcher binary for the pinned `version`; no build
+-- step or Rust toolchain needed. If the download ever fails it falls back to
+-- a Lua matcher and warns.
+--
+-- Keys while the menu is open (the "default" preset plus two overrides):
+--   <C-n> / <C-p>  next / previous item      <C-y>   accept
+--   <C-Space>      open menu / toggle docs    <C-e>   close menu
+--   <C-l> / <C-h>  next / previous snippet placeholder
+--   <C-b> / <C-f>  scroll documentation
 
 return {
 	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		"saghen/blink.cmp",
+		version = "1.*",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			{
 				"L3MON4D3/LuaSnip",
+				version = "2.*",
 				-- Optional native build for regex support in snippets. Skipped on
 				-- Windows or when `make` isn't available.
 				build = (function()
@@ -25,67 +31,44 @@ return {
 					end
 					return "make install_jsregexp"
 				end)(),
+				dependencies = { "rafamadriz/friendly-snippets" },
+				config = function()
+					require("luasnip.loaders.from_vscode").lazy_load()
+				end,
 			},
-			"saadparwaiz1/cmp_luasnip",
-			-- Completion sources. nvim-cmp keeps these in separate repos.
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			-- Icons in the completion menu.
-			"onsails/lspkind.nvim",
-			-- Auto-close/rename HTML/JSX tags.
-			"windwp/nvim-ts-autotag",
-			-- A large collection of ready-made snippets (loaded lazily below).
-			"rafamadriz/friendly-snippets",
 		},
-		config = function()
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
-			luasnip.config.setup({})
-			require("luasnip.loaders.from_vscode").lazy_load()
-
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			keymap = {
+				preset = "default",
+				["<C-l>"] = { "snippet_forward", "fallback" },
+				["<C-h>"] = { "snippet_backward", "fallback" },
+			},
+			appearance = {
+				nerd_font_variant = "mono",
+			},
+			completion = {
+				-- Preselect the first item but don't insert it until accepted
+				-- (same feel as the old completeopt=menu,menuone,noinsert).
+				list = { selection = { preselect = true, auto_insert = false } },
+				documentation = { auto_show = true, auto_show_delay_ms = 250 },
+				-- Preview the selected item inline.
+				ghost_text = { enabled = true },
+				menu = {
+					draw = {
+						columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "kind" } },
+					},
 				},
-				completion = { completeopt = "menu,menuone,noinsert" },
-				mapping = cmp.mapping.preset.insert({
-					["<C-n>"] = cmp.mapping.select_next_item(),
-					["<C-p>"] = cmp.mapping.select_prev_item(),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-					["<C-Space>"] = cmp.mapping.complete({}),
-					["<C-l>"] = cmp.mapping(function()
-						if luasnip.expand_or_locally_jumpable() then
-							luasnip.expand_or_jump()
-						end
-					end, { "i", "s" }),
-					["<C-h>"] = cmp.mapping(function()
-						if luasnip.locally_jumpable(-1) then
-							luasnip.jump(-1)
-						end
-					end, { "i", "s" }),
-				}),
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "path", max_item_count = 3 },
-					-- { name = "buffer", max_item_count = 5 },
-				},
-				formatting = {
-					expandable_indicator = true,
-					format = require("lspkind").cmp_format({
-						mode = "symbol_text",
-						maxwidth = 50,
-						ellipsis_char = "...",
-					}),
-				},
-				experimental = {
-					-- Preview the selected completion inline as ghost text.
-					ghost_text = true,
-				},
-			})
-		end,
+			},
+			snippets = { preset = "luasnip" },
+			sources = {
+				default = { "lsp", "snippets", "path", "buffer" },
+			},
+			-- Command-line completion is handled by wilder.nvim (lua/plugins/wilder.lua).
+			cmdline = { enabled = false },
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+		opts_extend = { "sources.default" },
 	},
 }
