@@ -1,53 +1,50 @@
+-- alpha.lua
+--
+-- Start screen shown when Neovim is opened without a file. <leader>a brings
+-- it back at any time.
+
 return {
 	"goolord/alpha-nvim",
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
+	event = "VimEnter",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
+	keys = {
+		{ "<leader>a", "<cmd>Alpha<CR>", desc = "Open dashboard" },
 	},
-
 	config = function()
 		local alpha = require("alpha")
-		local dashboard = require("alpha.themes.dashboard") -- dashboard or startify
+		local dashboard = require("alpha.themes.dashboard")
 
 		dashboard.section.header.val = {
 			[[                                                                       ]],
 			[[                                                                       ]],
 			[[                                                                       ]],
 			[[                                                                       ]],
-			[[                                                                     ]],
-			[[       ████ ██████           █████      ██                     ]],
-			[[      ███████████             █████                             ]],
-			[[      █████████ ███████████████████ ███   ███████████   ]],
-			[[     █████████  ███    █████████████ █████ ██████████████   ]],
-			[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-			[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-			[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
+			[[                                                                     ]],
+			[[       ████ ██████           █████      ██                     ]],
+			[[      ███████████             █████                             ]],
+			[[      █████████ ███████████████████ ███   ███████████   ]],
+			[[     █████████  ███    █████████████ █████ ██████████████   ]],
+			[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
+			[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
+			[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
 			[[                                                                       ]],
 			[[                                                                       ]],
 			[[                                                                       ]],
 		}
 
 		dashboard.section.buttons.val = {
-			dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
-			dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-			dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
-			dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-			dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua<CR>"),
-			dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+			dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
+			dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+			dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
+			dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+			dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua<CR>"),
+			dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
 		}
 
-		-- keymaps
-		vim.keymap.set("n", "<leader>a", "<cmd>Alpha<cr>", { desc = "Become Alpha" })
-
-		local function footer()
-			return "Chop 'till you plop..."
-		end
-
-		dashboard.section.footer.val = footer()
-
+		dashboard.section.footer.val = "Chop 'till you plop..."
 		dashboard.section.footer.opts.hl = "Type"
 		dashboard.section.header.opts.hl = "Include"
 		dashboard.section.buttons.opts.hl = "Keyword"
-
 		dashboard.opts.opts.noautocmd = true
 
 		alpha.setup(dashboard.opts)

@@ -1,15 +1,25 @@
+-- completions.lua
+--
+-- Autocompletion with nvim-cmp plus LuaSnip for snippets. Adapted from
+-- kickstart.nvim. Loaded on the first InsertEnter; nvim-lspconfig also pulls
+-- in cmp-nvim-lsp for its capabilities, which loads cmp when a file is opened.
+--
+-- Keys while the menu is open (see `:help ins-completion` for the reasoning):
+--   <C-n> / <C-p>  next / previous item
+--   <C-y>          accept the selected item
+--   <C-Space>      open the menu manually
+--   <C-l> / <C-h>  jump forward / back through snippet placeholders
+
 return {
-	{ -- Autocompletion
+	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
-			-- Snippet Engine & its associated nvim-cmp source
 			{
 				"L3MON4D3/LuaSnip",
+				-- Optional native build for regex support in snippets. Skipped on
+				-- Windows or when `make` isn't available.
 				build = (function()
-					-- Build Step is needed for regex support in snippets
-					-- This step is not supported in many windows environments
-					-- Remove the below condition to re-enable on windows
 					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
 						return
 					end
@@ -17,28 +27,22 @@ return {
 				end)(),
 			},
 			"saadparwaiz1/cmp_luasnip",
-
-			-- Adds other completion capabilities.
-			--  nvim-cmp does not ship with all sources by default. They are split
-			--  into multiple repos for maintenance purposes.
+			-- Completion sources. nvim-cmp keeps these in separate repos.
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			-- Icons in the completion menu.
 			"onsails/lspkind.nvim",
+			-- Auto-close/rename HTML/JSX tags.
 			"windwp/nvim-ts-autotag",
-
-			-- If you want to add a bunch of pre-configured snippets,
-			--    you can use this plugin to help you. It even has snippets
-			--    for various frameworks/libraries/etc. but you will have to
-			--    set up the ones that are useful for you.
+			-- A large collection of ready-made snippets (loaded lazily below).
 			"rafamadriz/friendly-snippets",
 		},
 		config = function()
-			-- See `:help cmp`
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			luasnip.config.setup({})
-			local lspkind = require("lspkind")
+			require("luasnip.loaders.from_vscode").lazy_load()
 
 			cmp.setup({
 				snippet = {
@@ -47,36 +51,11 @@ return {
 					end,
 				},
 				completion = { completeopt = "menu,menuone,noinsert" },
-
-				-- For an understanding of why these mappings were
-				-- chosen, you will need to read `:help ins-completion`
-				--
-				-- No, but seriously. Please read `:help ins-completion`,
-				-- it is really good!
 				mapping = cmp.mapping.preset.insert({
-					-- Select the [n]ext item
 					["<C-n>"] = cmp.mapping.select_next_item(),
-					-- Select the [p]revious item
 					["<C-p>"] = cmp.mapping.select_prev_item(),
-
-					-- Accept ([y]es) the completion.
-					--  This will auto-import if your LSP supports it.
-					--  This will expand snippets if the LSP sent a snippet.
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-
-					-- Manually trigger a completion from nvim-cmp.
-					--  Generally you don't need this, because nvim-cmp will display
-					--  completions whenever it has completion options available.
 					["<C-Space>"] = cmp.mapping.complete({}),
-
-					-- Think of <c-l> as moving to the right of your snippet expansion.
-					--  So if you have a snippet that's like:
-					--  function $name($args)
-					--    $body
-					--  end
-					--
-					-- <c-l> will move you to the right of each of the expansion locations.
-					-- <c-h> is similar, except moving you backwards.
 					["<C-l>"] = cmp.mapping(function()
 						if luasnip.expand_or_locally_jumpable() then
 							luasnip.expand_or_jump()
@@ -88,26 +67,22 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
-				-- Add sources for competion here
 				sources = {
 					{ name = "nvim_lsp" },
-					-- { name = "buffer", max_item_count = 5 },
-					{ name = "path", max_item_count = 3 },
 					{ name = "luasnip" },
+					{ name = "path", max_item_count = 3 },
+					-- { name = "buffer", max_item_count = 5 },
 				},
-
-				-- Adds the icons in the completion popup window
 				formatting = {
 					expandable_indicator = true,
-					format = lspkind.cmp_format({
+					format = require("lspkind").cmp_format({
 						mode = "symbol_text",
 						maxwidth = 50,
 						ellipsis_char = "...",
-					})
+					}),
 				},
-
 				experimental = {
-					-- text that shows up while typing but not in buffer yet
+					-- Preview the selected completion inline as ghost text.
 					ghost_text = true,
 				},
 			})

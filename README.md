@@ -1,81 +1,151 @@
 # Erik's Neovim config
 
+A Lua config that turns Neovim into a working IDE for Rust, Go, Python,
+TypeScript, C/C++, and Lua without dragging in a full distribution. Built on
+[lazy.nvim](https://github.com/folke/lazy.nvim) for plugins and
+[Mason](https://github.com/williamboman/mason.nvim) for language servers,
+formatters, and debug adapters. Requires Neovim 0.11+.
 
-## Introduction
-This config is modular in nature. The top level `init.lua` bootstraps the startup process.
-The rest of the config is split into directories and files. All of the config is in the `lua/` directory and the plugins are in the `lua/plugins/` directory. Most of the plugins and their setup/config are in their own files, but a few such as lsp-configuration are grouped in a file with the relevant name.
+Most of the LSP, completion, and Telescope setup started life in
+[kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim); see
+[Acknowledgements](#acknowledgements).
 
+## Layout
+
+```
+init.lua                  entry point: load order + lazy.nvim setup
+stylua.toml               formatting rules for the Lua in this repo
+lua/
+  lazy-bootstrap.lua      clones lazy.nvim on first run
+  settings.lua            vim options, leader key, provider settings
+  diagnostics.lua         vim.diagnostic presentation + runtime toggles
+  keymaps.lua             global keymaps (not tied to a plugin)
+  autocmds.lua            autocommands and user commands
+  plugins/                one file per plugin (or per group), read by lazy.nvim
+```
+
+Every file in `lua/plugins/` returns a lazy.nvim plugin spec and starts with a
+header comment explaining what the plugin does, when it loads, and which keys
+it adds. Plugin keymaps live in the plugin's own file in a `keys = {}` table,
+so pressing the key is also what loads the plugin.
+
+Startup is deliberately light: only the colorschemes, treesitter, and
+rustaceanvim load before the first buffer. Everything else waits for an event
+(opening a file, entering insert mode), a command, or a keymap. `:Lazy profile`
+shows what loaded and what it cost.
 
 ## Plugins
-A list of the plugins I'm using, roughly categorized.
 
-### Packages
-- mason
-- lazy
+| Area | Plugin | Loads on |
+|---|---|---|
+| Manager | [lazy.nvim](https://github.com/folke/lazy.nvim) | startup |
+| LSP | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig), [mason.nvim](https://github.com/mason-org/mason.nvim), [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim), [mason-tool-installer](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim), [fidget.nvim](https://github.com/j-hui/fidget.nvim) | opening a file, `:Mason` |
+| Completion | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp), [LuaSnip](https://github.com/L3MON4D3/LuaSnip), [friendly-snippets](https://github.com/rafamadriz/friendly-snippets), [lspkind](https://github.com/onsails/lspkind.nvim), [nvim-autopairs](https://github.com/windwp/nvim-autopairs), [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | insert mode |
+| Formatting | [conform.nvim](https://github.com/stevearc/conform.nvim) | `<leader>bf` |
+| Syntax | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (`master`; `main` needs Neovim 0.12) | startup |
+| Finding | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) (+ fzf-native, ui-select), [nvim-spectre](https://github.com/nvim-pack/nvim-spectre) | `<leader>f…`, `:Telescope` |
+| Files | [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim), [oil.nvim](https://github.com/stevearc/oil.nvim), [harpoon](https://github.com/ThePrimeagen/harpoon) (v2) | keymaps, `nvim <dir>` |
+| Git | [gitsigns](https://github.com/lewis6991/gitsigns.nvim), [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | opening a file, `<leader>gg` |
+| Testing | [neotest](https://github.com/nvim-neotest/neotest), [neotest-golang](https://github.com/fredrikaverpil/neotest-golang), [neotest-python](https://github.com/nvim-neotest/neotest-python), rustaceanvim adapter | `<leader>t…` |
+| Debugging | [nvim-dap](https://github.com/mfussenegger/nvim-dap), [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui), [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim), [nvim-dap-go](https://github.com/leoluz/nvim-dap-go) | `<F5>`, `<leader>db` |
+| Rust | [rustaceanvim](https://github.com/mrcjkb/rustaceanvim), [crates.nvim](https://github.com/saecki/crates.nvim) | rust files, `Cargo.toml` |
+| Editing | [Comment.nvim](https://github.com/numToStr/Comment.nvim), [nvim-surround](https://github.com/kylechui/nvim-surround), [mini.ai](https://github.com/echasnovski/mini.nvim), [vim-illuminate](https://github.com/RRethy/vim-illuminate), [todo-comments](https://github.com/folke/todo-comments.nvim) | after startup / opening a file |
+| UI | [lualine](https://github.com/nvim-lualine/lualine.nvim), [which-key](https://github.com/folke/which-key.nvim), [alpha-nvim](https://github.com/goolord/alpha-nvim), [snacks.nvim](https://github.com/folke/snacks.nvim) (input, bigfile), [wilder.nvim](https://github.com/gelguy/wilder.nvim), [FTerm](https://github.com/numToStr/FTerm.nvim), [markdown-preview](https://github.com/iamcco/markdown-preview.nvim) | after startup / `:` / `<F9>` |
+| Themes | [nordic](https://github.com/AlexvZyl/nordic.nvim) (active), [catppuccin](https://github.com/catppuccin/nvim), [tokyonight](https://github.com/folke/tokyonight.nvim), [kanagawa](https://github.com/rebelot/kanagawa.nvim), [onenord](https://github.com/rmehri01/onenord.nvim) | startup |
 
-### Core Utility
-- completions
-- spectre
-- telescope
-- treesitter
-- which-key
+## Languages
 
-### Terminal
-- FTerm
+| Language | Server | Formatter | Tests | Debugger |
+|---|---|---|---|---|
+| Rust | rust-analyzer via rustaceanvim (system install, **not** Mason) | rustfmt | cargo test / nextest | codelldb via rustaceanvim |
+| Go | gopls | LSP | go test | delve |
+| Python | pyright (+ ruff if installed) | isort, black | pytest / unittest | – |
+| TypeScript/JS | ts_ls (+ eslint if installed) | prettierd | – | – |
+| C/C++ | clangd | LSP | – | – |
+| Lua | lua_ls | stylua | – | – |
 
-### Other Utility
-- alpha
-- autopairs 
-- comment
-- conform
-- lualine
-- harpoon
-- illuminate
-- markdown-preview
-- mini
-- neotree
-- neotest
-- none-ls
-- [nvim-surround](https://github.com/kylechui/nvim-surround)
-- oil
-- todo-comments
-- wilder
+Servers listed in `lua/plugins/lsp-config.lua` are installed automatically by
+mason-tool-installer on the first file open. Anything else installed through
+`:Mason` is enabled automatically too (mason-lspconfig's `automatic_enable`).
 
-### Git
-- Fugitive
-- Lazygit
-
-### Configuration
-- mason-lsp-config
-- nvim-lsp-config
-
-### Debugging
-- nvim-dap
-- nvim-dap-ui
-
-### Themes and Aesthetics
-- catppuccin
-- one-nord
-- kanagawa
-- tokyonight
-- nordic
-- dressing
-
-### Language Specific
-####  Rust
-- crates
-- rustaceanvim
+**To add a language:** add the server to the `servers` table in
+`lua/plugins/lsp-config.lua` (an empty table is enough), add a formatter to
+`formatters_by_ft` in `lua/plugins/conform.lua` and to the `ensure_installed`
+list, and add the treesitter parser to `lua/plugins/treesitter.lua`.
 
 ## Keymaps
 
-Global or general keymaps are kept in the `keymaps.lua` file. Plugin specific keymaps are kept in their repesctive
-plugin `.lua` file.
+Leader is `<Space>`. Press it and wait for which-key, or run `<leader>fk` to
+search every mapping with its description. The main groups:
 
+| Prefix | Group | Examples |
+|---|---|---|
+| `<leader>f` | find | `ff` files, `fg` grep, `fb` buffers, `fh` help, `fk` keymaps, `f.` recent, `fc` this config |
+| `<leader>g` | git | `gg` lazygit, `gs` status tree, `gb` line blame, `gph` preview hunk |
+| `<leader>h` | harpoon | `ha` add, `ho` menu, `h1`…`h5` jump |
+| `<leader>t` | test | `tt` nearest, `tf` file, `ta` all, `td` debug nearest, `ts` summary, `to` output |
+| `<leader>d` | debug | `db` breakpoint, `dB` conditional breakpoint; `<F5>` continue, `<F1>`/`<F2>`/`<F3>` step, `<F7>` UI |
+| `<leader>u` | ui | `uc` 80-col guide, `uh` inlay hints, `uI` LSP inspector |
+| `<leader>ud` | diagnostics | `udt` on/off, `udi` inline text, `udg` signs, `udq` quiet, `udf` full, `udl…` severity, `udr…` rust sources |
+| `<leader>b` | buffer | `bf` format, `bn`/`bp` next/prev, `bc` close |
+| `<leader>s` | save | `sf` file, `sa` all |
+| `<leader>c` / `r` | code | `ca` code action, `rn` rename |
+
+Other frequently used keys:
+
+| Key | Action |
+|---|---|
+| `<leader><leader>` | find files |
+| `<leader>/` | fuzzy search in current buffer |
+| `<leader>e` | toggle diagnostic float under cursor |
+| `<leader>q` | toggle diagnostics quickfix list |
+| `[d` / `]d` | previous / next diagnostic |
+| `gd` `gr` `gI` `gD` `K` | LSP goto / references / implementation / declaration / hover |
+| `<C-\>` | toggle neo-tree |
+| `<leader>-` | open parent directory in oil |
+| `<leader>S` | Spectre search & replace |
+| `<F9>` | floating terminal |
+| `<C-h/j/k/l>` | move between windows |
+| `jk` | leave insert mode |
+| `gcc` / `gc` | toggle comment |
+| `ys` / `cs` / `ds` | add / change / delete surround |
+
+## Diagnostics
+
+`lua/diagnostics.lua` keeps the display settings for `vim.diagnostic` (inline
+text, gutter signs, severity floor) and exposes the toggles under
+`<leader>ud`. Defaults: inline text and signs on, WARN and above. In Rust
+buffers `<leader>udra` hides rustc/clippy output from the inline text while
+keeping rust-analyzer's, and `<leader>udrc` brings it back.
+
+## Housekeeping
+
+- `:Lazy` updates, cleans, and profiles plugins. `:Lazy profile` is the first
+  place to look if startup gets slow.
+- `:Mason` manages servers and tools. `:checkhealth` verifies external
+  dependencies (ripgrep, make, node, lazygit, …).
+- `lazy-lock.json` is committed so a fresh clone gets the exact plugin
+  versions that were last tested here. `:Lazy update` moves them forward and
+  rewrites the lockfile; commit it along with any config change it needed.
+- Formatting: `stylua .` from the repo root (config in `stylua.toml`), or
+  `<leader>bf` in a buffer.
+
+### Why the first `:` used to take a second
+
+Neovim probes for remote-plugin providers (Python, Node, Ruby, Perl) lazily,
+the first time something evaluates `has('python3')`. wilder.nvim does exactly
+that when it builds its command-line pipeline, and on a machine with pyenv but
+no `pynvim` the probe takes close to a second. `lua/settings.lua` disables the
+unused providers, which skips the probe entirely.
 
 ## Acknowledgements
 
-- Followed instructional videos from [Typecraft](https://www.youtube.com/@typecraft_dev) to learn the basics.
-- Thanks to [cpow](https://github.com/cpow/neovim-for-newbs/tree/main) for the videos and helping me learn to roll my own Neovim :)
-- Many thanks to TJDevries and [kickstart.vim](https://github.com/nvim-lua/kickstart.nvim) for an amazing setup. I took a lot from his config there but had already started rolling my own config so I didn't want to fork it directly.
-- I used Dillon Mulroy's neovim [config video](https://www.youtube.com/watch?v=oo_I5lAmdi0) to discover more useful plugins.
-- [Alpha Configuration](https://medium.com/@shaikzahid0713/alpha-start-up-screen-8e4a6e95804d)
+- [Typecraft](https://www.youtube.com/@typecraft_dev) for the videos that got
+  this started.
+- [cpow](https://github.com/cpow/neovim-for-newbs/tree/main) for the videos on
+  rolling your own config.
+- TJ DeVries and [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
+  for the LSP, completion, and Telescope setup this borrows heavily from.
+- Dillon Mulroy's [config video](https://www.youtube.com/watch?v=oo_I5lAmdi0)
+  and [kickstart.nix](https://github.com/dmmulroy/kickstart.nix) for wilder,
+  oil, spectre, the lualine harpoon component, and several autocommands.

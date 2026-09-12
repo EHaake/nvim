@@ -1,38 +1,28 @@
--- See `:help gitsigns` to understand what the configuration keys do
+-- git.lua
+--
+-- gitsigns   change markers in the gutter, hunk preview, inline blame
+-- lazygit    opens the lazygit TUI in a floating window (needs `lazygit` on PATH)
+--
+-- Neo-tree's git status view is mapped to <leader>gs in lua/plugins/neotree.lua.
+
 return {
-	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
+	{
 		"lewis6991/gitsigns.nvim",
-		event = "VeryLazy",
-		--
-		-- NOTE: example of how to set different icons for changes
-		--
-		-- opts = {
-		-- 	signs = {
-		-- 		add = { text = "+" },
-		-- 		change = { text = "~" },
-		-- 		delete = { text = "_" },
-		-- 		topdelete = { text = "‾" },
-		-- 		changedelete = { text = "~" },
-		-- 	},
-		-- },
-		config = function(_, opts)
-			require("gitsigns").setup(opts)
-			-- keymaps
-			vim.keymap.set("n", "<leader>gph", ":Gitsigns preview_hunk<cr>", { desc = "gitsigns preview hunk" })
-			vim.keymap.set(
-				"n",
-				"<leader>gb",
-				":Gitsigns toggle_current_line_blame<cr>",
-				{ desc = "gitsigns toggle line blame" }
-			)
-		end,
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {
+			-- signs = { add = { text = "+" }, change = { text = "~" }, delete = { text = "_" } },
+		},
+		keys = {
+			{ "<leader>gph", "<cmd>Gitsigns preview_hunk<CR>", desc = "Preview hunk" },
+			{ "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", desc = "Toggle line blame" },
+		},
 	},
 	{
 		"kdheepak/lazygit.nvim",
-		config = function()
-			require("telescope").load_extension("lazygit")
-
-			vim.keymap.set("n", "<leader>gg", ":LazyGit<cr>", { desc = "LazyGit" })
-		end,
+		cmd = { "LazyGit", "LazyGitCurrentFile", "LazyGitFilter" },
+		dependencies = { "nvim-lua/plenary.nvim" },
+		keys = {
+			{ "<leader>gg", "<cmd>LazyGit<CR>", desc = "LazyGit" },
+		},
 	},
 }

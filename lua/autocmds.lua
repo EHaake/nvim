@@ -1,25 +1,27 @@
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
+-- autocmds.lua
+--
+-- Autocommands and user commands that aren't tied to a plugin.
+-- See `:help lua-guide-autocommands` and `:help nvim_create_user_command`.
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+local augroup = function(name)
+	return vim.api.nvim_create_augroup("erik-" .. name, { clear = true })
+end
+
+-- Briefly highlight yanked text. Try it with `yap`.
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	group = augroup("highlight-yank"),
+	desc = "Highlight when yanking text",
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 })
 
--- From Dillon Mulroy's setup:
--- https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/user/vertical_help.lua
---
--- Open help windows in vertical split
+-- Open :help in a vertical split on the right instead of a horizontal one.
+-- From https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/user/vertical_help.lua
 vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("vertical_help", { clear = true }),
+	group = augroup("vertical-help"),
 	pattern = "help",
-	desc = "Open help windows in vertical split",
+	desc = "Open help windows in a vertical split",
 	callback = function()
 		vim.bo.bufhidden = "unload"
 		vim.cmd.wincmd("L")
@@ -27,57 +29,31 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- From Dillon Mulroy's setup:
--- https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/user/edit_text.lua
---
--- Turn on spell checking and text wrapping for certain filetypes
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	group = vim.api.nvim_create_augroup("edit_text", { clear = true }),
-	pattern = { "gitcommit", "markdown", "txt" },
-	desc = "Enable spell checking and text wrapping for certain filetypes",
+-- Prose-like filetypes get soft wrap and spell checking.
+-- From https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/user/edit_text.lua
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("edit-text"),
+	pattern = { "gitcommit", "markdown", "text" },
+	desc = "Enable wrap and spell for prose filetypes",
 	callback = function()
 		vim.opt_local.wrap = true
 		vim.opt_local.spell = true
 	end,
 })
 
--- From Dillon Mulroy's setup:
--- https://github.com/dmmulroy/kickstart.nix/blob/main/config/nvim/lua/user/toggle_diagnostics.lua
---
--- Toggle diagnostics
+-- :ToggleDiagnostics  turn diagnostics on/off globally (same as <leader>udt).
 vim.api.nvim_create_user_command("ToggleDiagnostics", function()
-	if vim.g.diagnostics_enabled == nil then
-		vim.g.diagnostics_enabled = false
-		vim.diagnostic.disable()
-	elseif vim.g.diagnostics_enabled then
-		vim.g.diagnostics_enabled = false
-		vim.diagnostic.disable()
-	else
-		vim.g.diagnostics_enabled = true
-		vim.diagnostic.enable()
-	end
-end, {})
+	require("diagnostics").toggle()
+end, { desc = "Toggle diagnostics on/off" })
 
--- Toggles the Quick Fix list by setting and opening it if it doesn't exist,
--- and closing it otherwise.
+-- :ToggleQFList  open the quickfix list filled with all diagnostics, or close
+-- it if a quickfix window is already open. Mapped to <leader>q.
 vim.api.nvim_create_user_command("ToggleQFList", function()
-	local qf_exists = false
-
-	-- Get the current windows
-	for _, win in pairs(vim.fn.getwininfo()) do
-		if win["quickfix"] == 1 then
-			qf_exists = true
+	for _, win in ipairs(vim.fn.getwininfo()) do
+		if win.quickfix == 1 then
+			vim.cmd("cclose")
+			return
 		end
 	end
-
-	-- If quickfix is one of the windows...
-	if qf_exists then
-		vim.cmd("cclose")
-		return
-	-- otherwise set the qflist and open it.
-	else
-		vim.diagnostic.setqflist()
-		vim.cmd("copen")
-		return
-	end
-end, {})
+	vim.diagnostic.setqflist()
+end, { desc = "Toggle the diagnostics quickfix list" })

@@ -1,88 +1,84 @@
--- vim-settings.lua
--- This file contains all the basic global vim settings I want
+-- settings.lua
 --
--- Neovide settings
+-- Global Neovim options. Everything here is plain `vim.opt` / `vim.g`; nothing
+-- depends on a plugin, so this file runs before lazy.nvim is set up.
+-- See `:help option-list` for the full list of options.
+
+-- Leader key. Must be set before lazy.nvim loads so that plugin `keys` specs
+-- that use <leader> resolve to the right key.
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- [[ Remote-plugin providers ]]
+--
+-- Neovim can run plugins written in Python, Node, Ruby, and Perl through
+-- "providers". None of the plugins in this config need them, but Neovim probes
+-- for each provider lazily the first time something evaluates `has('python3')`
+-- (or node/ruby/perl). On this machine those probes are slow because they spawn
+-- the interpreter and look for the host package (pynvim, neovim npm module, ...):
+--
+--   python3 via the pyenv shim  ~0.85 s
+--   node                        ~0.3 s
+--   perl                        ~2.6 s
+--
+-- wilder.nvim evaluates `has('python3')` the first time you press `:`, which is
+-- what made the first command line of every session hang for about a second.
+-- Setting the loaded_*_provider flags to 0 tells Neovim to skip the probe and
+-- report the provider as unavailable. `:checkhealth provider` will list them as
+-- disabled, which is expected.
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+
+-- [[ Mason tools on PATH ]]
+-- Mason installs servers, formatters, and the tree-sitter CLI into this bin
+-- directory. Putting it on PATH here (rather than letting mason.nvim do it when
+-- it loads) means nvim-treesitter can compile parsers and conform can find
+-- formatters even before an LSP has been started.
+local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+if vim.fn.isdirectory(mason_bin) == 1 and not vim.env.PATH:find(mason_bin, 1, true) then
+	vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
+end
+
+-- [[ Neovide ]]
 if vim.g.neovide then
 	vim.o.guifont = "JetBrains Mono:h13"
-	-- vim.o.guifont = "Anonymous Pro:h14"
 	vim.g.neovide_scale_factor = 1.4
 end
 
--- tabs and spaces
+-- [[ Indentation ]]
+-- Display width of a tab and how much `>>` / `<<` shift. Tabs are kept as tabs
+-- (no expandtab); individual filetypes can override this via ftplugins.
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.breakindent = true -- wrapped lines keep their indent
 
--- Scrolling
-vim.opt.scrolloff = 8 -- always have at least 8 line between cursor and end of buffer
--- Add line numbers
+-- [[ UI ]]
 vim.opt.number = true
-
--- signcolumn always open so errors/warnings don't push buffer
-vim.o.signcolumn = "yes:1"
---
--- Set highlight on search
-vim.opt.hlsearch = true
-
--- Don't show the mode, since it's already in status line
-vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
---  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
-
--- Enable break indent
-vim.opt.breakindent = true
-
--- Save undo history
-vim.opt.undofile = true
-
--- Configure how new splits should be opened
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8 -- keep 8 lines visible above/below the cursor
+vim.opt.signcolumn = "yes:1" -- always reserve the gutter so text doesn't jump
+vim.opt.showmode = false -- lualine already shows the mode
+vim.opt.termguicolors = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
--- Enable mouse mode
 vim.opt.mouse = "a"
 
--- Ignore casing in search + smartcase
+-- Show invisible characters. Off by default; toggle with `:set list!`.
+-- vim.opt.list = true
+-- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+-- [[ Search ]]
+vim.opt.hlsearch = true
 vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.opt.smartcase = true -- ...unless the pattern contains uppercase
+vim.opt.inccommand = "split" -- live preview of :s substitutions
 
--- Turn on 24 bit colors
-vim.opt.termguicolors = true
+-- [[ Files ]]
+vim.opt.undofile = true -- persistent undo across sessions
+vim.opt.clipboard = "unnamedplus" -- share the system clipboard
 
--- Sets how neovim will display certain whitespace in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
---vim.opt.list = true
---vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = "split"
-
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
-vim.diagnostic.config({
-	float = {
-		source = "always",
-	},
-	virtual_text = {
-		spacing = 2,
-		prefix = "●",
-		severity = { -- only WARN and ERROR will show inline
-			min = vim.diagnostic.severity.WARN,
-		},
-		-- format each diagnostic message passed to the severity filter
-		format = function(diagnostic)
-			-- strip everything after the first line (after the first line \n.*, replace with "")
-			local msg = diagnostic.message:gsub("\n.*", "")
-			-- Inline messages never more than 80 chars
-			local max = 80
-			if #msg > max then
-				msg = msg:sub(1, max - 3) .. "..."
-			end
-			return msg
-		end,
-	},
-})
+-- Diagnostics (virtual text, signs, severity filters) are configured in
+-- lua/diagnostics.lua so the runtime toggles and the defaults live together.
