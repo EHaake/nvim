@@ -134,9 +134,10 @@ keeping rust-analyzer's, and `<leader>udrc` brings it back.
   place to look if startup gets slow.
 - `:Mason` manages servers and tools. `:checkhealth` verifies external
   dependencies (ripgrep, make, node, lazygit, …).
-- `lazy-lock.json` is committed so a fresh clone gets the exact plugin
-  versions that were last tested here. `:Lazy update` moves them forward and
-  rewrites the lockfile; commit it along with any config change it needed.
+- `lazy-lock.json` is git-ignored: each machine tracks the latest plugin
+  versions on its own `:Lazy update` schedule. If an update breaks a plugin,
+  find the last good commit with `:Lazy log` and pin it with
+  `commit = "<hash>"` in that plugin's spec until upstream fixes it.
 - Formatting: `stylua .` from the repo root (config in `stylua.toml`), or
   `<leader>bf` in a buffer.
 - Sessions are saved per directory on exit by persistence.nvim; nothing is
