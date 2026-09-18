@@ -36,35 +36,35 @@ shows what loaded and what it cost.
 
 ## Plugins
 
-| Area | Plugin | Loads on |
-|---|---|---|
-| Manager | [lazy.nvim](https://github.com/folke/lazy.nvim) | startup |
-| LSP | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig), [mason.nvim](https://github.com/mason-org/mason.nvim), [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim), [mason-tool-installer](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim), [fidget.nvim](https://github.com/j-hui/fidget.nvim) | opening a file, `:Mason` |
-| Completion | [blink.cmp](https://github.com/saghen/blink.cmp), [LuaSnip](https://github.com/L3MON4D3/LuaSnip), [friendly-snippets](https://github.com/rafamadriz/friendly-snippets), [nvim-autopairs](https://github.com/windwp/nvim-autopairs), [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | insert mode |
-| Formatting | [conform.nvim](https://github.com/stevearc/conform.nvim) | saving a file, `<leader>bf` |
-| Syntax | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (`master`; `main` needs Neovim 0.12) | startup |
-| Finding | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) (+ fzf-native, ui-select), [nvim-spectre](https://github.com/nvim-pack/nvim-spectre) | `<leader>f…`, `:Telescope` |
-| Files | [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim), [oil.nvim](https://github.com/stevearc/oil.nvim), [harpoon](https://github.com/ThePrimeagen/harpoon) (v2) | keymaps, `nvim <dir>` |
-| Git | [gitsigns](https://github.com/lewis6991/gitsigns.nvim), [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | opening a file, `<leader>gg` |
-| Sessions | [persistence.nvim](https://github.com/folke/persistence.nvim) | opening a file, `<leader>ss` |
-| Testing | [neotest](https://github.com/nvim-neotest/neotest), [neotest-golang](https://github.com/fredrikaverpil/neotest-golang), [neotest-python](https://github.com/nvim-neotest/neotest-python), rustaceanvim adapter | `<leader>t…` |
-| Debugging | [nvim-dap](https://github.com/mfussenegger/nvim-dap), [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui), [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim), [nvim-dap-go](https://github.com/leoluz/nvim-dap-go) | `<F5>`, `<leader>db` |
-| Rust | [rustaceanvim](https://github.com/mrcjkb/rustaceanvim), [crates.nvim](https://github.com/saecki/crates.nvim) | rust files, `Cargo.toml` |
-| Editing | [Comment.nvim](https://github.com/numToStr/Comment.nvim), [nvim-surround](https://github.com/kylechui/nvim-surround), [mini.ai](https://github.com/echasnovski/mini.nvim), [todo-comments](https://github.com/folke/todo-comments.nvim) | after startup / opening a file |
-| UI | [snacks.nvim](https://github.com/folke/snacks.nvim) (dashboard, terminal, words, input, bufdelete, indent, bigfile), [lualine](https://github.com/nvim-lualine/lualine.nvim), [which-key](https://github.com/folke/which-key.nvim), [wilder.nvim](https://github.com/gelguy/wilder.nvim), [markdown-preview](https://github.com/iamcco/markdown-preview.nvim) | startup / after startup / `:` |
-| Themes | [nordic](https://github.com/AlexvZyl/nordic.nvim) (active), [catppuccin](https://github.com/catppuccin/nvim), [tokyonight](https://github.com/folke/tokyonight.nvim), [kanagawa](https://github.com/rebelot/kanagawa.nvim), [onenord](https://github.com/rmehri01/onenord.nvim) | startup |
+| Area       | Plugin                                                                                                                                                                                                                                                                                                                                                        | Loads on                       |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| Manager    | [lazy.nvim](https://github.com/folke/lazy.nvim)                                                                                                                                                                                                                                                                                                               | startup                        |
+| LSP        | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig), [mason.nvim](https://github.com/mason-org/mason.nvim), [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim), [mason-tool-installer](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim), [fidget.nvim](https://github.com/j-hui/fidget.nvim)                            | opening a file, `:Mason`       |
+| Completion | [blink.cmp](https://github.com/saghen/blink.cmp), [LuaSnip](https://github.com/L3MON4D3/LuaSnip), [friendly-snippets](https://github.com/rafamadriz/friendly-snippets), [nvim-autopairs](https://github.com/windwp/nvim-autopairs), [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)                                                              | insert mode                    |
+| Formatting | [conform.nvim](https://github.com/stevearc/conform.nvim)                                                                                                                                                                                                                                                                                                      | saving a file, `<leader>bf`    |
+| Syntax     | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (`master`; `main` needs Neovim 0.12)                                                                                                                                                                                                                                                    | startup                        |
+| Finding    | [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) (+ fzf-native, ui-select), [nvim-spectre](https://github.com/nvim-pack/nvim-spectre)                                                                                                                                                                                                       | `<leader>f…`, `:Telescope`     |
+| Files      | [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim), [oil.nvim](https://github.com/stevearc/oil.nvim), [harpoon](https://github.com/ThePrimeagen/harpoon) (v2)                                                                                                                                                                                         | keymaps, `nvim <dir>`          |
+| Git        | [gitsigns](https://github.com/lewis6991/gitsigns.nvim), [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)                                                                                                                                                                                                                                              | opening a file, `<leader>gg`   |
+| Sessions   | [persistence.nvim](https://github.com/folke/persistence.nvim)                                                                                                                                                                                                                                                                                                 | opening a file, `<leader>ss`   |
+| Testing    | [neotest](https://github.com/nvim-neotest/neotest), [neotest-golang](https://github.com/fredrikaverpil/neotest-golang), [neotest-python](https://github.com/nvim-neotest/neotest-python), rustaceanvim adapter                                                                                                                                                | `<leader>t…`                   |
+| Debugging  | [nvim-dap](https://github.com/mfussenegger/nvim-dap), [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui), [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim), [nvim-dap-go](https://github.com/leoluz/nvim-dap-go)                                                                                                                         | `<F5>`, `<leader>db`           |
+| Rust       | [rustaceanvim](https://github.com/mrcjkb/rustaceanvim), [crates.nvim](https://github.com/saecki/crates.nvim)                                                                                                                                                                                                                                                  | rust files, `Cargo.toml`       |
+| Editing    | [Comment.nvim](https://github.com/numToStr/Comment.nvim), [nvim-surround](https://github.com/kylechui/nvim-surround), [mini.ai](https://github.com/echasnovski/mini.nvim), [todo-comments](https://github.com/folke/todo-comments.nvim)                                                                                                                       | after startup / opening a file |
+| UI         | [snacks.nvim](https://github.com/folke/snacks.nvim) (dashboard, terminal, words, input, bufdelete, indent, bigfile), [lualine](https://github.com/nvim-lualine/lualine.nvim), [which-key](https://github.com/folke/which-key.nvim), [wilder.nvim](https://github.com/gelguy/wilder.nvim), [markdown-preview](https://github.com/iamcco/markdown-preview.nvim) | startup / after startup / `:`  |
+| Themes     | [nordic](https://github.com/AlexvZyl/nordic.nvim) (active), [catppuccin](https://github.com/catppuccin/nvim), [tokyonight](https://github.com/folke/tokyonight.nvim), [kanagawa](https://github.com/rebelot/kanagawa.nvim), [onenord](https://github.com/rmehri01/onenord.nvim)                                                                               | startup                        |
 
 ## Languages
 
-| Language | Server | Formatter | Tests | Debugger |
-|---|---|---|---|---|
-| Rust | rust-analyzer via rustaceanvim (system install, **not** Mason) | rustfmt | cargo test / nextest | codelldb (Mason) via rustaceanvim |
-| Go | gopls | gofmt | go test | delve |
-| Python | pyright + ruff | ruff (imports + format) | pytest / unittest | – |
-| TypeScript/JS | ts_ls (+ eslint if installed) | prettierd | – | – |
-| JSON/YAML/Markdown | – | prettierd | – | – |
-| C/C++ | clangd | LSP | – | – |
-| Lua | lua_ls | stylua | – | – |
+| Language           | Server                                                         | Formatter               | Tests                | Debugger                          |
+| ------------------ | -------------------------------------------------------------- | ----------------------- | -------------------- | --------------------------------- |
+| Rust               | rust-analyzer via rustaceanvim (system install, **not** Mason) | rustfmt                 | cargo test / nextest | codelldb (Mason) via rustaceanvim |
+| Go                 | gopls                                                          | gofmt                   | go test              | delve                             |
+| Python             | pyright + ruff                                                 | ruff (imports + format) | pytest / unittest    | –                                 |
+| TypeScript/JS      | ts_ls (+ eslint if installed)                                  | prettierd               | –                    | –                                 |
+| JSON/YAML/Markdown | –                                                              | prettierd               | –                    | –                                 |
+| C/C++              | clangd                                                         | LSP                     | –                    | –                                 |
+| Lua                | lua_ls                                                         | stylua                  | –                    | –                                 |
 
 Servers listed in `lua/plugins/lsp-config.lua` are installed automatically by
 mason-tool-installer on the first file open. Anything else installed through
@@ -85,40 +85,40 @@ list, and add the treesitter parser to `lua/plugins/treesitter.lua`.
 Leader is `<Space>`. Press it and wait for which-key, or run `<leader>fk` to
 search every mapping with its description. The main groups:
 
-| Prefix | Group | Examples |
-|---|---|---|
-| `<leader>f` | find | `ff` files, `fg` grep, `fb` buffers, `fh` help, `fk` keymaps, `f.` recent, `fc` this config |
-| `<leader>g` | git | `gg` lazygit, `gs` status tree, `gb` toggle inline blame |
-| `<leader>gh` | git hunks | `ghs` stage/unstage, `ghr` reset, `ghp` preview, `ghi` preview inline, `ghb` blame line, `ghd` diff, `ghS`/`ghR` whole buffer; `]h`/`[h` next/prev hunk, `ih` hunk text object |
-| `<leader>h` | harpoon | `ha` add, `ho` menu, `h1`…`h5` jump |
-| `<leader>t` | test | `tt` nearest, `tf` file, `ta` all, `td` debug nearest, `ts` summary, `to` output |
-| `<leader>d` | debug | `db` breakpoint, `dB` conditional breakpoint; `<F5>` continue, `<F1>`/`<F2>`/`<F3>` step, `<F7>` UI |
-| `<leader>u` | ui | `uf`/`uF` format on save (global/buffer), `uc` 80-col guide, `uh` inlay hints, `uI` LSP inspector |
-| `<leader>ud` | diagnostics | `udt` on/off, `udi` inline text, `udg` signs, `udq` quiet, `udf` full, `udl…` severity, `udr…` rust sources |
-| `<leader>b` | buffer | `bf` format, `bd` delete buffer (keeps layout), `bD` delete others, `bn`/`bp` next/prev, `bc` close window |
-| `<leader>s` | save / session | `sf` save file, `sa` save all, `ss` restore session for cwd, `sl` restore last session, `sd` stop saving session |
-| `<leader>c` / `r` | code | `ca` code action, `rn` rename |
+| Prefix            | Group          | Examples                                                                                                                                                                       |
+| ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `<leader>f`       | find           | `ff` files, `fg` grep, `fb` buffers, `fh` help, `fk` keymaps, `f.` recent, `fc` this config                                                                                    |
+| `<leader>g`       | git            | `gg` lazygit, `gs` status tree, `gb` toggle inline blame                                                                                                                       |
+| `<leader>gh`      | git hunks      | `ghs` stage/unstage, `ghr` reset, `ghp` preview, `ghi` preview inline, `ghb` blame line, `ghd` diff, `ghS`/`ghR` whole buffer; `]h`/`[h` next/prev hunk, `ih` hunk text object |
+| `<leader>h`       | harpoon        | `ha` add, `ho` menu, `h1`…`h5` jump                                                                                                                                            |
+| `<leader>t`       | test           | `tt` nearest, `tf` file, `ta` all, `td` debug nearest, `ts` summary, `to` output                                                                                               |
+| `<leader>d`       | debug          | `db` breakpoint, `dB` conditional breakpoint; `<F5>` continue, `<F1>`/`<F2>`/`<F3>` step, `<F7>` UI                                                                            |
+| `<leader>u`       | ui             | `uf`/`uF` format on save (global/buffer), `uc` 80-col guide, `uh` inlay hints, `uI` LSP inspector                                                                              |
+| `<leader>ud`      | diagnostics    | `udt` on/off, `udi` inline text, `udg` signs, `udq` quiet, `udf` full, `udl…` severity, `udr…` rust sources                                                                    |
+| `<leader>b`       | buffer         | `bf` format, `bd` delete buffer (keeps layout), `bD` delete others, `bn`/`bp` next/prev, `bc` close window                                                                     |
+| `<leader>s`       | save / session | `sf` save file, `sa` save all, `ss` restore session for cwd, `sl` restore last session, `sd` stop saving session                                                               |
+| `<leader>c` / `r` | code           | `ca` code action, `rn` rename                                                                                                                                                  |
 
 Other frequently used keys:
 
-| Key | Action |
-|---|---|
-| `<leader><leader>` | find files |
-| `<leader>/` | fuzzy search in current buffer |
-| `<leader>e` | toggle diagnostic float under cursor |
-| `<leader>q` | toggle diagnostics quickfix list |
-| `[d` / `]d` | previous / next diagnostic |
-| `gd` `gr` `gI` `gD` `K` | LSP goto / references / implementation / declaration / hover |
-| `<C-\>` | toggle neo-tree |
-| `<leader>-` | open parent directory in oil |
-| `<leader>S` | Spectre search & replace |
-| `<F9>` | floating terminal (normal and terminal mode) |
-| `<leader>a` | dashboard |
-| `<leader>]` / `<leader>[` | next / previous LSP reference of word under cursor |
-| `<C-h/j/k/l>` | move between windows |
-| `jk` | leave insert mode |
-| `gcc` / `gc` | toggle comment |
-| `ys` / `cs` / `ds` | add / change / delete surround |
+| Key                       | Action                                                       |
+| ------------------------- | ------------------------------------------------------------ |
+| `<leader><leader>`        | find files                                                   |
+| `<leader>/`               | fuzzy search in current buffer                               |
+| `<leader>e`               | toggle diagnostic float under cursor                         |
+| `<leader>q`               | toggle diagnostics quickfix list                             |
+| `[d` / `]d`               | previous / next diagnostic                                   |
+| `gd` `gr` `gI` `gD` `K`   | LSP goto / references / implementation / declaration / hover |
+| `<C-\>`                   | toggle neo-tree                                              |
+| `<leader>-`               | open parent directory in oil                                 |
+| `<leader>S`               | Spectre search & replace                                     |
+| `<F9>`                    | floating terminal (normal and terminal mode)                 |
+| `<leader>a`               | dashboard                                                    |
+| `<leader>]` / `<leader>[` | next / previous LSP reference of word under cursor           |
+| `<C-h/j/k/l>`             | move between windows                                         |
+| `jk`                      | leave insert mode                                            |
+| `gcc` / `gc`              | toggle comment                                               |
+| `ys` / `cs` / `ds`        | add / change / delete surround                               |
 
 ## Diagnostics
 
@@ -144,14 +144,6 @@ keeping rust-analyzer's, and `<leader>udrc` brings it back.
   restored unless you press `<leader>ss` (or `s` on the dashboard).
 - blink.cmp downloads a prebuilt fuzzy-matcher binary on first use. If
   `:checkhealth blink.cmp` says it is missing, run `:Lazy build blink.cmp`.
-
-### Why the first `:` used to take a second
-
-Neovim probes for remote-plugin providers (Python, Node, Ruby, Perl) lazily,
-the first time something evaluates `has('python3')`. wilder.nvim does exactly
-that when it builds its command-line pipeline, and on a machine with pyenv but
-no `pynvim` the probe takes close to a second. `lua/settings.lua` disables the
-unused providers, which skips the probe entirely.
 
 ## Acknowledgements
 
